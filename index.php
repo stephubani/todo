@@ -50,7 +50,7 @@ $all_todo = $todo->fetch_todo();
                                 <td><?php echo $todo['name']?></td>
                                 <td>
                                 <?php
-                                if( $todo['is_completed'] == 2){
+                                if( $todo['is_complted'] == 2){
                                     echo "Not Completed";
                                 }else{
                                     echo " Completed";
