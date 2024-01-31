@@ -47,7 +47,7 @@ $all_todo = $todo->fetch_todo();
                                 foreach($all_todo as $todo ){
                             ?>
                             <tr>
-                                <td><?php echo $todo['name']?></td>
+                                <td><?php echo $todo['nae']?></td>
                                 <td>
                                 <?php
                                 if( $todo['is_completed'] == 2){
