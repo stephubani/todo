@@ -53,7 +53,7 @@ class Todo extends Db{
 
     }
     public function update_todo($id , $name){
-        $sql = "UPDATE todo SET name WHERE id=?";
+        $sql = "UPDATE todo SET name=? WHERE id=?";
         $statement = $this->dbconn->prepare($sql);
         $updated = $statement->execute([$name , $id]);
         if($updated){

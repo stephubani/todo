@@ -40,7 +40,7 @@ if(isset($_GET['id'])){
                     <label for="todo">Add New Task</label>
                     <?php
                         if(isset($_SESSION['todo_id'])){
-                            echo "<input type='text' class='form-control mb-3' name='task' id='' value='$name'>";
+                            echo "<input type='text' class='form-control mb-3' name='task_edited' id='' value='$name'>";
                         }else{
                             echo "<input type='text' class='form-control mb-3' name='task' id=''>";
                         }
@@ -51,7 +51,7 @@ if(isset($_GET['id'])){
                     <textarea name="task_desc" class="form-control mb-3" id="" cols="30" rows="10"></textarea>
                     <?php
                         if(isset($_SESSION['todo_id'])){
-                            echo " <a href='process/process_edit.php'><button type='submit' class='btn btn-primary' name='add_task'>Edit Task</button></a>";
+                            echo "<button type='submit' class='btn btn-primary' name='edit_task'>Edit Task</button>";
                         }
                     ?>
                     <button type="submit" class="btn btn-primary" name="add_task">Add Task</button>
