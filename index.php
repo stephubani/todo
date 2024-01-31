@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 require_once "classes/Todo.php";
 $todo = new Todo();
-$all_todo = $todo->fetch_todo();
+$all_todo = $todo->find_All();
 
 // echo "<pre>";
 // foreach($all_todo as $todo){
@@ -29,11 +29,41 @@ $all_todo = $todo->fetch_todo();
 </head>
 <body>
     <div class="container-fluid">
+         <!-- nav bar starts here -->
         <div class="row">
-            <div class="col-md">
-                <h1>Welcome To TODO</h1>
-                <p>A website made for an easier well planned life</p>
+            <div class="col-md ">
+                <nav class="navbar navbar-expand-lg  bg-primary ">
+                    <div class="container">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link active redesigned" aria-current="page" href="index.php" style="font-size: 15px;">Home</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link active redesigned" aria-current="page" href="create.php" style="font-size: 15px;">Add To Do</a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </div>
+        </div>
+        <!-- nav bar ends here -->
+        <div class="row">
+            <center>
+                <div class="col-md">
+                    <h1>Welcome To TODO</h1>
+                    <p>A website made for an easier well planned life</p>
+                </div>
+            </center>
+            
         </div>
 
         <div class="row">
@@ -55,7 +85,7 @@ $all_todo = $todo->fetch_todo();
                                 <td name='todo_name'><?php echo $todo['name']?></td>
                                 <td>
                                 <?php
-                                if( $todo['is_completed'] == 2){
+                                if( $todo['is_completed'] == 0){
                                     echo "Not Completed";
                                 }else{
                                     echo " Completed";
@@ -66,7 +96,7 @@ $all_todo = $todo->fetch_todo();
                                 <td><?php echo $todo['completed_at']?></td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="completed" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             
                                         </label>

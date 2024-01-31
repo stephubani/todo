@@ -27,13 +27,13 @@ class Todo extends Db{
 
     }
 
-    public function fetch_todo(){
-        $sql = 'SELECT * FROM todo';
+    public function find_All(){
+        $sql = 'SELECT * FROM todo ORDER BY created_at ASCgit';
         $statement = $this->dbconn->prepare($sql);
         $statement->execute();
-        $to_do =$statement->fetchAll(PDO:: FETCH_ASSOC);
-        if($to_do){
-            return $to_do;
+        $all_todo =$statement->fetchAll(PDO:: FETCH_ASSOC);
+        if($all_todo){
+            return $all_todo;
 
         }else{
             return false;
@@ -41,7 +41,7 @@ class Todo extends Db{
 
     }
 
-    public function fetch_todo_byId($id){
+    public function find_byId($id){
         $sql = 'SELECT * FROM todo WHERE id = ?';
         $statement = $this->dbconn->prepare($sql);
         $statement->execute([$id]);
@@ -52,7 +52,7 @@ class Todo extends Db{
 
 
     }
-    public function update_todo($id , $name){
+    public function update_todo($id , $name , ){
         $sql = "UPDATE todo SET name=? WHERE id=?";
         $statement = $this->dbconn->prepare($sql);
         $updated = $statement->execute([$name , $id]);
