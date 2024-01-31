@@ -9,8 +9,8 @@ if($_POST && isset($_POST['add_task'])){
     $task_desc = $_POST['task_desc'];
 
     if(!empty($name )&& !empty($date_added )&& !empty($date_completed ) && !empty($task_desc )){
-        $task = new Task();
-        $task->insert_task($name);
+        $todo = new Todo();
+        $todo->insert_todo($name);
        
     }else{
         echo "Please you need to input all fields";
