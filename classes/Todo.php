@@ -87,11 +87,7 @@ class Todo extends Db{
         }else{
             return false;
         }
-    }
-
-    
-
-    
+    } 
 }
 
 
