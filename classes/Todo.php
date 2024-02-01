@@ -68,7 +68,7 @@ class Todo extends Db{
 
     public function completed($id){
         $date_completed = date('Y-m-d h:i:s');
-        $sql = "UPDATE todo SET completed_at=? is_completed = 1 WHERE id=?";
+        $sql = "UPDATE todo SET completed_at=? ,is_completed = 1 WHERE id=?";
         $statement = $this->dbconn->prepare($sql);
         $updated = $statement->execute([$date_completed, $id]);
         if($updated){
