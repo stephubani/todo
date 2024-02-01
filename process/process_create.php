@@ -9,7 +9,11 @@ if($_POST && isset($_POST['add_task'])){
 
     if(!empty($name )&&  !empty($task_desc )){
         $todo = new Todo();
-        $todo->create($name);
+        $response = $todo->create($name);
+        if($response){
+            header('location:../index.php');
+            exit();
+        }
        
     }else{
         echo "Please you need to input all fields";
