@@ -9,7 +9,7 @@ class Todo extends Db{
         $this->dbconn = $this->connect();
     }
 
-    public function insert_todo($name){
+    public function create($name){
         try{
             $date_format = date('Y-m-d h:i:s');
             $sql = 'INSERT INTO todo(name, created_at) VALUES(?,?)';
@@ -28,7 +28,7 @@ class Todo extends Db{
     }
 
     public function find_All(){
-        $sql = 'SELECT * FROM todo ORDER BY created_at ASCgit';
+        $sql = 'SELECT * FROM todo ORDER BY created_at DESC';
         $statement = $this->dbconn->prepare($sql);
         $statement->execute();
         $all_todo =$statement->fetchAll(PDO:: FETCH_ASSOC);
@@ -52,7 +52,7 @@ class Todo extends Db{
 
 
     }
-    public function update_todo($id , $name , ){
+    public function update($id , $name ){
         $sql = "UPDATE todo SET name=? WHERE id=?";
         $statement = $this->dbconn->prepare($sql);
         $updated = $statement->execute([$name , $id]);
@@ -65,13 +65,22 @@ class Todo extends Db{
 
     }
 
-    public function update_toCompleted($id){
+    public function completed($id){
         $date_completed = date('Y-m-d h:i:s');
-        $sql = "UPDATE todo SET completed_at WHERE id=?";
+        $sql = "UPDATE todo SET completed_at=? WHERE id=?";
         $statement = $this->dbconn->prepare($sql);
         $updated = $statement->execute([$date_completed, $id]);
         if($updated){
-            return true;
+            $sql = 'UPDATE todo set is_completed= 1 WHERE id=?';
+            $statement = $this->dbconn->prepare($sql);
+            $response  =  $statement->execute([$id]);
+            if($response){
+                return true ;
+
+            }else{
+                return false;
+            }
+
         }else{
             return false;
         }

@@ -69,13 +69,19 @@ $all_todo = $todo->find_All();
         <div class="row">
             <div class="col-md">
                 <table class="table table-striped">
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Date Created</th>
-                    <th>Date Completed</th>
-                    <th>Completed</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Date Created</th>
+                            <th>Date Completed</th>
+                            <th>Completed</th>
+                            <th>Edit</th>
+                            <th>Delete</th> 
+                        </tr>
+                        
+                    </thead>
+                    
                     <tbody>
                             <?php
                                 foreach($all_todo as $todo ){
@@ -94,13 +100,9 @@ $all_todo = $todo->find_All();
                                 </td>
                                 <td><?php echo $todo['created_at']?></td>
                                 <td><?php echo $todo['completed_at']?></td>
+                                
                                 <td>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="completed" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            
-                                        </label>
-                                    </div>
+                                   <a href="process/process_update.php?id=<?php echo $todo['id']?>">Mark As Completed</a>
                                 </td>
                                 <td>
                                     <a href="create.php?id=<?php echo $todo['id']?>">

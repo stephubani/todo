@@ -9,7 +9,7 @@ if($_POST && isset($_POST['add_task'])){
 
     if(!empty($name )&&  !empty($task_desc )){
         $todo = new Todo();
-        $todo->insert_todo($name);
+        $todo->create($name);
        
     }else{
         echo "Please you need to input all fields";
@@ -22,7 +22,7 @@ if($_POST && isset($_POST['edit_task'])){
 
     if(!empty($name) && !empty($todo_id)){
         $todo = new Todo();
-        $response =   $todo->update_todo($todo_id ,$name);
+        $response =   $todo->update($todo_id ,$name);
 
         if($response){
             header('location:../index.php');
