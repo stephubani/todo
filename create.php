@@ -32,7 +32,14 @@ if(isset($_GET['id'])){
     <div class="container-fluid">
     <center>
         <div class="row">
+            
             <div>
+                <?php
+                if(isset($_SESSION['error_message'])){
+                    echo "<div class='alert alert-danger'>".$_SESSION['error_message']."</div>";
+                    unset($_SESSION['error_message']);
+                }
+                ?>
               <h1>Today</h1>  
             </div>
             <div class="col-md-6 m-auto">

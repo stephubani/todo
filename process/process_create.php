@@ -14,6 +14,10 @@ if($_POST && isset($_POST['add_task'])){
             header('location:../index.php');
             exit();
         }
+        // else{
+        // //     header('location:../create.php');
+        // //     $_SESSION['error_message'] = 'A todo name must be unique';
+        // // }
        
     }else{
         echo "Please you need to input all fields";

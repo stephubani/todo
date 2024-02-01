@@ -2,6 +2,11 @@
 require_once 'Db.php';
 
 class Todo extends Db{
+    public $name;
+    public $is_completed;
+    public $created_at;
+    public $updated_at;
+    public $completed_at;
     public $dbconn ;
 
     public function __construct()
@@ -11,15 +16,27 @@ class Todo extends Db{
 
     public function create($name){
         try{
-            $date_format = date('Y-m-d h:i:s');
-            $sql = 'INSERT INTO todo(name, created_at) VALUES(?,?)';
+            $sql = 'SELECT * FROM todo WHERE name=?';
             $statement = $this->dbconn->prepare($sql);
-            $response =   $statement->execute([$name, $date_format]);
-            if($response){
-                return $this->dbconn->lastInsertId();
+            $statement->execute([$name]);
+            $response =$statement->fetchAll(PDO:: FETCH_ASSOC);
+
+            if($response== true){
+                header('location:../create.php');
+                $_SESSION['error_message'] = 'Please a todo name should be unique';
             }else{
-                return false;
+                $date_format = date('Y-m-d h:i:s');
+                $sql = 'INSERT INTO todo(name, created_at) VALUES(?,?)';
+                $statement = $this->dbconn->prepare($sql);
+                $response =   $statement->execute([$name, $date_format]);
+                if($response){
+                    return $this->dbconn->lastInsertId();
+                }else{
+                    return 0;
+                }
             }
+
+            
         }catch(PDOException $e){
             $e->getMessage();
         }
