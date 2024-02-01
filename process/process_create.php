@@ -34,9 +34,11 @@ if($_POST && isset($_POST['edit_task'])){
         }
     }else{
         echo 'All fields are neccessary for this update';
-    }
+    } 
+}
 
-    
+if(isset($_POST['delete_btn']) && $_POST){
+    echo 'this works';
 }
 
 ?>

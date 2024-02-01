@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 require_once "classes/Todo.php";
 $todo = new Todo();
 $all_todo = $todo->find_All();
+    
 
 // echo "<pre>";
 // foreach($all_todo as $todo){
@@ -75,9 +76,7 @@ $all_todo = $todo->find_All();
                             <th>Status</th>
                             <th>Date Created</th>
                             <th>Date Completed</th>
-                            <th>Completed</th>
-                            <th>Edit</th>
-                            <th>Delete</th> 
+                            
                         </tr>
                         
                     </thead>
@@ -100,7 +99,10 @@ $all_todo = $todo->find_All();
                                 </td>
                                 <td><?php echo $todo['created_at']?></td>
                                 <td><?php echo $todo['completed_at']?></td>
-                                
+
+                                <?php
+                                    if($todo['is_completed'] == 0){      
+                                ?>
                                 <td>
                                    <a href="process/process_update.php?id=<?php echo $todo['id']?>">Mark As Completed</a>
                                 </td>
@@ -108,11 +110,15 @@ $all_todo = $todo->find_All();
                                     <a href="create.php?id=<?php echo $todo['id']?>">
                                         <button type="submit" name="edit_todo">
                                         <i class="fa-solid fa-pen"></i>
-                                    </button> 
+                                        </button> 
                                     </a>
                                    
                                 </td>
-                                <td><button type="submit" name="delete_btn" class="btn"><i class="fa fa-trash text-danger"></i></button></td>
+
+                                <?php   
+                                    }
+                                ?>
+                                <td><a href="process/process_delete.php?id=<?php echo $todo['id']?>"><button type="submit" name="delete_btn" class="btn"><i class="fa fa-trash text-danger"></i></button></a></td>
                                
                             </tr> 
                             <?php

@@ -78,6 +78,17 @@ class Todo extends Db{
         }
     }
 
+    public function delete($id){
+        $sql = "DELETE FROM todo WHERE id=?";
+        $statement = $this->dbconn->prepare($sql);
+        $deleted = $statement->execute([$id]);
+        if($deleted){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     
 
     
