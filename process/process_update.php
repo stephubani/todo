@@ -9,10 +9,8 @@ if(isset($_GET['id'])){
     $response = $todo->completed($todo_id);
 
     if($response){
-        header('location:../index.php');
+        $status = $todo->displayStatus();
+        echo $status;
     }
     
 }
-
-
-?>

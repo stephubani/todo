@@ -2,19 +2,7 @@
 error_reporting(E_ALL);
 require_once "classes/Todo.php";
 $todo = new Todo();
-$all_todo = $todo->find_All();
-    
-
-// echo "<pre>";
-// foreach($all_todo as $todo){
-//     echo ($todo['is_completed']);
-// }
-
-// echo "</pre>";
-// die();
-
-
-
+$all_todo = $todo->findAll();
 ?>
 
 
@@ -84,54 +72,30 @@ $all_todo = $todo->find_All();
                     </thead>
                     
                     <tbody>
-                            <?php
-                                foreach($all_todo as $todo ){
-                            ?>
-                                 <tr>
-                                <input type="hidden" name="todo_id" value="<?php echo $todo['id']?>">
-                                <td name='todo_name'><?php echo $todo['name']?></td>
+                        <?php foreach($all_todo as $todo ){ ?>
+                            <tr>
+                                <td><?php echo $todo->name ?></td>
+                                <td><?php echo $todo->displayStatus() ?></td>
+                                <td><?php echo $todo->created_at ?></td>
+                                <td><?php echo $todo->completed_at ?></td>
                                 <td>
-                                <?php
-                                if( $todo['is_completed'] == 0){
-                                    echo "Not Completed";
-                                }else{
-                                    echo " Completed";
-                                }
-                                ?>
-                                </td>
-                                <td><?php echo $todo['created_at']?></td>
-                                <td><?php echo $todo['completed_at']?></td>
-
-                                <td>
-                                    <?php
-                                    if($todo['is_completed'] == 0){
-                                    ?>
-                                    <a href="process/process_update.php?id=<?php echo $todo['id']?>">Mark As Completed</a>
-                                    <?php
-                                     }
-                                    ?>
-                                   
+                                    <?php if($todo->is_completed == 0){ ?>
+                                            <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
+                                            <input class="form-check-input checked" type="checkbox" value="" id="flexCheckDefault">
+                                    <?php } ?>
                                 </td>
                                 <td>
-                                    <?php
-                                        if($todo['is_completed'] == 0){
-                                    ?>
-                                    <a href="create.php?id=<?php echo $todo['id']?>">
-                                        <button type="submit" name="edit_todo">
-                                        <i class="fa-solid fa-pen"></i>
-                                        </button> 
-                                    </a>
-                                    <?php
-                                    }
-                                    ?>
+                                    <?php if($todo->is_completed == 0){ ?>
+                                        <a href="create.php?id=<?php echo $todo->id?>">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                    <?php } ?>
                                 </td>
                             
-                                <td><a href="process/process_delete.php?id=<?php echo $todo['id']?>"><button type="submit" name="delete_btn" class="btn"><i class="fa fa-trash text-danger"></i></button></a></td>
+                                <td><a href="process/process_delete.php?id=<?php echo $todo->id ?>"><i class="fa fa-trash text-danger"></i></a></td>
                                
                             </tr> 
-                            <?php
-                                }
-                            ?>     
+                        <?php } ?>     
                     </tbody>
                 </table>
 
@@ -139,6 +103,7 @@ $all_todo = $todo->find_All();
 
         </div>
     </div>
-   
+<script src="jquery.min.js"></script>
+<script src="index.js"></script>  
 </body>
 </html>

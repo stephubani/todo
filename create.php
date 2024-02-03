@@ -4,11 +4,9 @@ require_once('classes/Todo.php');
 session_start();
 
 if(isset($_GET['id'])){
-    $_SESSION['todo_id'] = $_GET['id'];
-
     $todo = new Todo();
-    $all_todo =  $todo->find_byId($_SESSION['todo_id']);
-    $name = $all_todo['name'];
+    $todo = $todo->findById($_GET['id']);
+    $name = $todo->name;
     // echo '<pre>';
     // print_r($name);
     // echo '</pre>';
@@ -47,15 +45,14 @@ if(isset($_GET['id'])){
                     <label for="todo">Add New Task</label>
                     <?php
                         if(isset($_GET['id'])){
-                            echo "<input type='text' class='form-control mb-3' name='task_edited' id='' value='$name'>";
+                            echo "<input type='text' class='form-control mb-3' name='task_edited' id='todo' value='$name'>";
+                            echo "<input type='hidden' class='form-control mb-3' name='todo_id' id='todo' value='$todo->id'>";
+
                         }else{
-                            echo "<input type='text' class='form-control mb-3' name='task' id=''>";
+                            echo "<input type='text' class='form-control mb-3' name='task' id='todo'>";
                         }
                     ?>
                    
-
-                    <label for="todo">Description</label>
-                    <textarea name="task_desc" class="form-control mb-3" id="" cols="30" rows="10"></textarea>
                     <?php
                         if(isset($_GET['id'])){
                             echo "<button type='submit' class='btn btn-primary' name='edit_task'>Edit Task</button>";
@@ -63,9 +60,6 @@ if(isset($_GET['id'])){
                             echo ' <button type="submit" class="btn btn-primary" name="add_task">Add Task</button>';
                         }
                     ?>
-                   
-
-
                 </form>
             </div>
         </div>

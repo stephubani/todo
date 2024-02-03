@@ -7,17 +7,13 @@ if($_POST && isset($_POST['add_task'])){
     $name = $_POST['task'];
     $task_desc = $_POST['task_desc'];
 
-    if(!empty($name )&&  !empty($task_desc )){
+    if(!empty($name )){
         $todo = new Todo();
         $response = $todo->create($name);
         if($response){
             header('location:../index.php');
             exit();
         }
-        // else{
-        // //     header('location:../create.php');
-        // //     $_SESSION['error_message'] = 'A todo name must be unique';
-        // // }
        
     }else{
         echo "Please you need to input all fields";
@@ -26,7 +22,7 @@ if($_POST && isset($_POST['add_task'])){
 
 if($_POST && isset($_POST['edit_task'])){
     $name = $_POST['task_edited'];
-    $todo_id  =   $_SESSION['todo_id'];
+    $todo_id  = $_POST['todo_id'];
 
     if(!empty($name) && !empty($todo_id)){
         $todo = new Todo();
@@ -36,13 +32,11 @@ if($_POST && isset($_POST['edit_task'])){
             header('location:../index.php');
             exit();
         }
-    }else{
-        echo 'All fields are neccessary for this update';
-    } 
+        header("location: ../create.php?id=$todo_id");
+        exit();
+        
+    }
+    $_SESSION['error_message'] = 'All fields are neccessary';
+    header('location: ../create.php');
+    exit();
 }
-
-if(isset($_POST['delete_btn']) && $_POST){
-    echo 'this works';
-}
-
-?>
