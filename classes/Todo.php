@@ -112,7 +112,7 @@ class Todo extends Db{
         $statement = $this->dbconn->prepare($sql);
         $updated = $statement->execute([$date_completed, $id]);
         
-        return $updated ? true : false;
+        return $updated;
     }
 
     public function delete($id){

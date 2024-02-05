@@ -70,18 +70,17 @@ $all_todo = $todo->findAll();
                         </tr>
                         
                     </thead>
-                    
-                    <tbody>
-                        <?php foreach($all_todo as $todo ){ ?>
+                    <?php foreach($all_todo as $todo ){ ?>
+                    <tbody id="new_tr">
                             <tr>
                                 <td><?php echo $todo->name ?></td>
-                                <td><?php echo $todo->displayStatus() ?></td>
+                                <td id="todo_status"><?php echo $todo->displayStatus() ?></td>
                                 <td><?php echo $todo->created_at ?></td>
                                 <td><?php echo $todo->completed_at ?></td>
                                 <td>
                                     <?php if($todo->is_completed == 0){ ?>
                                             <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
-                                            <input class="form-check-input checked" type="checkbox" value="" id="flexCheckDefault">
+                                            <button class="btn btn-primary mark_btn" >Mark as Completed</button>
                                     <?php } ?>
                                 </td>
                                 <td>
