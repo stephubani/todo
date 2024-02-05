@@ -5,7 +5,6 @@ require_once('../classes/Todo.php');
 
 if($_POST && isset($_POST['add_task'])){
     $name = $_POST['task'];
-    $task_desc = $_POST['task_desc'];
 
     if(!empty($name )){
         $todo = new Todo();
