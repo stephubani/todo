@@ -18,8 +18,11 @@ if($_POST && isset($_POST['add_task'])){
                 exit();
             }
         }else{
-            header("location:../create.php");
+            $_SESSION['name'] = $todo_name;
             $_SESSION['error_message'] = 'Todo name must be unique';
+            header("location:../create.php?name=".$_SESSION['name']);
+            exit();
+           
         }
         $_SESSION['error_message'];
        

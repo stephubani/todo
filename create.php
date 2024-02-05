@@ -7,6 +7,7 @@ if(isset($_GET['id'])){
     $todo = new Todo();
     $todo = $todo->findById($_GET['id']);
     $name = $todo->name;
+   
     // echo '<pre>';
     // print_r($name);
     // echo '</pre>';
@@ -46,7 +47,7 @@ if(isset($_GET['id'])){
                     <input type="hidden" name="todo_id" value='<?php echo $todo->id?>'>
                     <?php
                         if(isset($_GET['id'])){
-                            echo "<input type='text' class='form-control mb-3' name='task_edited' id='todo' value='$name'>";
+                            echo "<input type='text' class='form-control mb-3' name='task_edited' id='todo' value='" . $_SESSION['name'] . "'>";
                             echo "<input type='hidden' class='form-control mb-3' name='todo_id' id='todo' value='$todo->id'>";
 
                         }else{
