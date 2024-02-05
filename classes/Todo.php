@@ -16,28 +16,36 @@ class Todo extends Db{
         $this->dbconn = $this->connect();
     }
 
-    public function create($name){
+    public function nameCheck($name){
         try{
             $sql = 'SELECT * FROM todo WHERE name=?';
             $statement = $this->dbconn->prepare($sql);
             $statement->execute([$name]);
-            $response =$statement->fetchAll(PDO:: FETCH_ASSOC);
+            $todo_name =$statement->fetchAll(PDO:: FETCH_ASSOC);
 
-            if($response== true){
-                header('location:../create.php');
-                $_SESSION['error_message'] = 'Please a todo name should be unique';
+            if($todo_name){
+                return $todo_name;
             }else{
-                $date_format = date('Y-m-d h:i:s');
-                $sql = 'INSERT INTO todo(name, created_at) VALUES(?,?)';
-                $statement = $this->dbconn->prepare($sql);
-                $response =   $statement->execute([$name, $date_format]);
-                if($response){
-                    return $this->dbconn->lastInsertId();
-                }else{
-                    return 0;
-                }
+                return false;
             }
 
+        }catch(PDOException $e){
+                $e->getMessage();
+        }
+    }
+
+    public function create($name){
+        try{
+        
+            $date_format = date('Y-m-d h:i:s');
+            $sql = 'INSERT INTO todo(name, created_at) VALUES(?,?)';
+            $statement = $this->dbconn->prepare($sql);
+            $response=   $statement->execute([$name, $date_format]);
+            if($response){
+                return $this->dbconn->lastInsertId();
+            }else{
+                return false;
+            }
             
         }catch(PDOException $e){
             $e->getMessage();

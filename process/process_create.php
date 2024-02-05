@@ -5,14 +5,23 @@ require_once('../classes/Todo.php');
 
 if($_POST && isset($_POST['add_task'])){
     $name = $_POST['task'];
+    $todo_id = $_POST['todo_id'];
 
     if(!empty($name )){
         $todo = new Todo();
-        $response = $todo->create($name);
-        if($response){
-            header('location:../index.php');
-            exit();
+        $todo_name =  $todo->nameCheck($name);
+
+        if(!$todo_name){
+            $response = $todo->create($name);
+            if($response){
+                header('location:../index.php');
+                exit();
+            }
+        }else{
+            header("location:../create.php");
+            $_SESSION['error_message'] = 'Todo name must be unique';
         }
+        $_SESSION['error_message'];
        
     }else{
         echo "Please you need to input all fields";

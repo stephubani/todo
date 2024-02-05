@@ -43,6 +43,7 @@ if(isset($_GET['id'])){
             <div class="col-md-6 m-auto">
                 <form action="process/process_create.php" method="post">
                     <label for="todo">Add New Task</label>
+                    <input type="hidden" name="todo_id" value='<?php echo $todo->id?>'>
                     <?php
                         if(isset($_GET['id'])){
                             echo "<input type='text' class='form-control mb-3' name='task_edited' id='todo' value='$name'>";
