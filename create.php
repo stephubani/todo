@@ -3,16 +3,20 @@ error_reporting(E_ALL);
 require_once('classes/Todo.php');
 session_start();
 
+
+
+$name = '';
+
 if(isset($_GET['id'])){
     $todo = new Todo();
     $todo = $todo->findById($_GET['id']);
     $name = $todo->name;
-   
-    // echo '<pre>';
-    // print_r($name);
-    // echo '</pre>';
-    // die();
 }
+if(isset($_SESSION['name'])){
+    $name = $_SESSION['name'];
+    unset($_SESSION['name']);
+}
+
 
 
 ?>
@@ -47,11 +51,11 @@ if(isset($_GET['id'])){
                     <input type="hidden" name="todo_id" value='<?php echo $todo->id?>'>
                     <?php
                         if(isset($_GET['id'])){
-                            echo "<input type='text' class='form-control mb-3' name='task_edited' id='todo' value='" . $_SESSION['name'] . "'>";
+                            echo "<input type='text' class='form-control mb-3' name='task_edited' id='todo' value='$todo->name'>";
                             echo "<input type='hidden' class='form-control mb-3' name='todo_id' id='todo' value='$todo->id'>";
 
                         }else{
-                            echo "<input type='text' class='form-control mb-3' name='task' id='todo'>";
+                            echo "<input type='text' class='form-control mb-3' name='task'  value='".$name ."' id='todo'>";
                         }
                     ?>
                    

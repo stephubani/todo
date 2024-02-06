@@ -55,6 +55,21 @@ $all_todo = $todo->findAll();
             
         </div>
 
+        <div class= 'mb-5'>
+            <center>
+                <div class="row">
+                    <div class="col-md">
+                        <h4>Add Todo</h4>
+                        <label for="">To-do Name</label>
+                        <input type="text" name="todo_name" id="" class="form-control todo_name mb-3">
+                        <button class="btn btn-primary">Add To-Do</button>
+                    </div>
+                </div>
+            </center>
+            
+           
+        </div>
+
         <div class="row">
             <div class="col-md">
                 <table class="table table-striped">
@@ -64,15 +79,14 @@ $all_todo = $todo->findAll();
                             <th>Status</th>
                             <th>Date Created</th>
                             <th>Date Completed</th>
-                            <th>Completion</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th></th>
                         </tr>
                         
                     </thead>
-                    <?php foreach($all_todo as $todo ){ ?>
-                    <tbody id="new_tr">
-                            <tr>
+                   
+                    <tbody>
+                        <?php foreach($all_todo as $todo ){ ?>
+                            <tr class="new_tr" id='<?php echo $todo->id?>'>
                                 <td><?php echo $todo->name ?></td>
                                 <td id="todo_status"><?php echo $todo->displayStatus() ?></td>
                                 <td><?php echo $todo->created_at ?></td>
@@ -82,16 +96,17 @@ $all_todo = $todo->findAll();
                                             <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
                                             <button class="btn btn-primary mark_btn" >Mark as Completed</button>
                                     <?php } ?>
-                                </td>
-                                <td>
+
                                     <?php if($todo->is_completed == 0){ ?>
                                         <a href="create.php?id=<?php echo $todo->id?>">
                                             <i class="fa-solid fa-pen"></i>
                                         </a>
                                     <?php } ?>
+                                    <!-- <a href="process/process_delete.php?id=<?php echo $todo->id ?>"> -->
+                                    <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
+                                    <button class="btn delete_btn"><i class="fa fa-trash text-danger"></i></button>
+                                <!-- </a> -->
                                 </td>
-                            
-                                <td><a href="process/process_delete.php?id=<?php echo $todo->id ?>"><i class="fa fa-trash text-danger"></i></a></td>
                                
                             </tr> 
                         <?php } ?>     

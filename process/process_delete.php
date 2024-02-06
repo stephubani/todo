@@ -8,8 +8,7 @@ if(isset($_GET['id'])){
     $response =   $todo->delete($todo_id);
 
     if($response){
-        header('location:../index.php');
-        exit();
+        echo 'Todo Deleted Successfully';
     }
 
 }

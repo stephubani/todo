@@ -16,21 +16,19 @@ class Todo extends Db{
         $this->dbconn = $this->connect();
     }
 
-    public function nameCheck($name){
+    public function doesTodoNameExist($name){
         try{
             $sql = 'SELECT * FROM todo WHERE name=?';
             $statement = $this->dbconn->prepare($sql);
             $statement->execute([$name]);
             $todo_name =$statement->fetchAll(PDO:: FETCH_ASSOC);
 
-            if($todo_name){
-                return $todo_name;
-            }else{
-                return false;
-            }
+            return $todo_name ? true : false;
 
         }catch(PDOException $e){
-                $e->getMessage();
+            echo  $e->getMessage();
+            exit();
+              
         }
     }
 
@@ -114,7 +112,7 @@ class Todo extends Db{
        
     }
 
-    public function completed($id){
+    public function markAsCompleted($id){
         $date_completed = date('Y-m-d h:i:s');
         $sql = "UPDATE todo SET completed_at=? ,is_completed = 1 WHERE id=?";
         $statement = $this->dbconn->prepare($sql);
