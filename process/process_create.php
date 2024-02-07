@@ -3,30 +3,27 @@ error_reporting(E_ALL);
 session_start();
 require_once('../classes/Todo.php');
 
-if($_POST && isset($_POST['add_task'])){
-    $name = $_POST['task'];
+if(isset($_POST['name'])){
+    $name = $_POST['name'];
 
     if(!empty($name )){
         $todo = new Todo();
         $todoNameExists =  $todo->doesTodoNameExist($name);
 
         if(!$todoNameExists){
-            $response = $todo->create($name);
-            if($response){
-                header('location:../index.php');
-                exit();
+            $todo_id = $todo->create($name);
+            if($todo_id){
+                $todo_data = $todo->findById($todo_id);
+                echo json_encode($todo_data);
             }
         }else{
-            $_SESSION['name'] = $name;
-            $_SESSION['error_message'] = 'Todo name must be unique';
-            header("location:../create.php");
-            exit();
+           echo json_encode('To-Do Name Must Be Unique');
            
         }
-        $_SESSION['error_message'];
+        
        
     }else{
-        echo "Please you need to input all fields";
+        echo json_encode('All fiels must be filled');
     }
 }
 

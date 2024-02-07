@@ -62,7 +62,7 @@ $all_todo = $todo->findAll();
                         <h4>Add Todo</h4>
                         <label for="">To-do Name</label>
                         <input type="text" name="todo_name" id="" class="form-control todo_name mb-3">
-                        <button class="btn btn-primary">Add To-Do</button>
+                        <button class="btn btn-primary addTodo">Add To-Do</button>
                     </div>
                 </div>
             </center>
@@ -94,7 +94,7 @@ $all_todo = $todo->findAll();
                                 <td>
                                     <?php if($todo->is_completed == 0){ ?>
                                             <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
-                                            <button class="btn btn-primary mark_btn" >Mark as Completed</button>
+                                            <button class="btn btn-primary mark_btn">Mark as Completed</button>
                                     <?php } ?>
 
                                     <?php if($todo->is_completed == 0){ ?>
@@ -104,7 +104,7 @@ $all_todo = $todo->findAll();
                                     <?php } ?>
                                     <!-- <a href="process/process_delete.php?id=<?php echo $todo->id ?>"> -->
                                     <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
-                                    <button class="btn delete_btn"><i class="fa fa-trash text-danger"></i></button>
+                                    <button class="btn" id="delete_btn"><i class="fa fa-trash text-danger"></i></button>
                                 <!-- </a> -->
                                 </td>
                                
