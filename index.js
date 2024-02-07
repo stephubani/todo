@@ -30,28 +30,27 @@ $(document).ready(function(){
           console.log(newTodoRow);
           $('.todo_name').val('');
 
-          //  document.getElementById(`mark_button_${newTodo.id}`).addEventListener('click',markAsCompleted)
+           document.getElementById(`mark_button_${newTodo.id}`).addEventListener('click',markAsCompleted)
       })
     })
 
-     $('.mark_btn').click(function(){
-       markAsCompleted();
+     $('.mark_btn').click(function(event){
+       markAsCompleted(event);
 
     })
    
-    function markAsCompleted(){
-      var todo_id =   $(this).closest('tr').find('.todo_id').val();
-      alert(todo_id);
-      return;
-
+    function markAsCompleted(event){
+      var todo_id =   $(event.target).closest('tr').find('.todo_id').val();
+       console.log(todo_id);
     $.get('process/process_update.php', {id: todo_id}, function(response){
       var updateTodo = JSON.parse(response)
-      console.log(updateTodo);
+     
       var updateTodoRow = `
       <td>${updateTodo.name}</td>
       <td>${updateTodo.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
       <td>${updateTodo.created_at}</td>
       <td>${updateTodo.completed_at}</td>
+      <td><button class="btn delete_btn"><i class="fa fa-trash text-danger"></i></button></td>
       `
       $(`#${todo_id}`).html(updateTodoRow);
       
