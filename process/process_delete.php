@@ -8,7 +8,16 @@ if(isset($_GET['id'])){
     $response =   $todo->delete($todo_id);
 
     if($response){
-        echo 'Todo Deleted Successfully';
+        $success_message = 'Todo Deleted Successfully' ;
+        $response = ['success' => true , 'data' => $success_message];
+        echo json_encode($response);
+        exit();
+       
+      
+    }else{
+        $error_message = 'Unable To Delete This To-Do At The Moment';
+        $response = ['success' => false , 'data' => $error_message];
+        echo json_encode($response);
     }
 
 }

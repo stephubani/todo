@@ -3,47 +3,36 @@ error_reporting(E_ALL);
 session_start();
 require_once('../classes/Todo.php');
 
-if(isset($_POST['name'])){
-    $name = $_POST['name'];
+if(isset($_GET['name'])){
+    $name = $_GET['name'];
+    
+    $id = isset($_GET['id']) ? $_GET['id'] : '';
 
     if(!empty($name )){
         $todo = new Todo();
         $todoNameExists =  $todo->doesTodoNameExist($name);
 
         if(!$todoNameExists){
-            $todo_id = $todo->create($name);
-            if($todo_id){
-                $todo_data = $todo->findById($todo_id);
-                echo json_encode($todo_data);
+            if(!empty($id)){
+                $todo->update($id,$name);
+            }else{
+                $id = $todo->create($name);  
             }
+
+            $todo_data = $todo->findById($id);
+            $response = ['success'=> true, 'data'=>$todo_data];
+            echo json_encode($response);
+            exit();
         }else{
-           echo json_encode('To-Do Name Must Be Unique');
+           $error = 'To-Do Name Must Be Unique';
            
         }
         
        
     }else{
-        echo json_encode('All fiels must be filled');
+        $error = 'All fiels must be filled';
     }
+    $response = ['success' => false , 'error' => $error];
+    echo json_encode($response);
 }
 
-if($_POST && isset($_POST['edit_task'])){
-    $name = $_POST['task_edited'];
-    $todo_id  = $_POST['todo_id'];
-
-    if(!empty($name) && !empty($todo_id)){
-        $todo = new Todo();
-        $response =   $todo->update($todo_id ,$name);
-
-        if($response){
-            header('location:../index.php');
-            exit();
-        }
-        header("location: ../create.php?id=$todo_id");
-        exit();
-        
-    }
-    $_SESSION['error_message'] = 'All fields are neccessary';
-    header('location: ../create.php');
-    exit();
-}
