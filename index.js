@@ -51,19 +51,37 @@ $(document).ready(function(){
     function markAsCompleted(event){
       var todo_id =  $(event.target).closest('tr').find('.todo_id').val()
       $.get('process/process_update.php', {id: todo_id}, function(response){
-        var updateTodo = JSON.parse(response)
+        var rsp = JSON.parse(response)
+        if(rsp.success == true){
+           var updateTodoRow = `
+          <td>${rsp.data.name}</td>
+          <td>${rsp.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
+          <td><input type='hidden' value= '${rsp.data.id}' class='todo_id'></td>
+          <td>${rsp.data.created_at}</td>
+          <td>${rsp.data.completed_at}</td>
+          <td><button class="btn delete_btn" id = 'deleteTodo_${rsp.data.id}'><i class="fa fa-trash text-danger"></i></button></td>
+          `
+          $('#display_message').html(
+            `
+            <div id="display_message" class="col-md-6 alert alert-success" >
+              ${rsp.message}
+            </div>
+          `
+          )
+          $(`#${todo_id}`).html(updateTodoRow);
+          document.getElementById(`deleteTodo_${rsp.data.id}`).addEventListener('click', deleteTodo)
+          
+        }else{
+          $('#display_message').html(
+            `
+            <div id="display_message" class="col-md-6 alert alert-danger" >
+              ${rsp.error}
+            </div>
+          `
+          )
+        }
       
-        var updateTodoRow = `
-        <td>${updateTodo.name}</td>
-        <td>${updateTodo.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
-        <td><input type='hidden' value= '${updateTodo.id}' class='todo_id'></td>
-        <td>${updateTodo.created_at}</td>
-        <td>${updateTodo.completed_at}</td>
-        <td><button class="btn delete_btn" id = 'deleteTodo_${updateTodo.id}'><i class="fa fa-trash text-danger"></i></button></td>
-        `
-        $(`#${todo_id}`).html(updateTodoRow);
-        document.getElementById(`deleteTodo_${updateTodo.id}`).addEventListener('click', deleteTodo)
-        
+       
       });
     
    
