@@ -127,7 +127,6 @@ $(document).ready(function(){
       }
       $.get('process/process_create.php', data , function(response){
         const res = JSON.parse(response)
-        console.log(res.data.id)
         if(res.success){
         
           let html = ''
@@ -172,7 +171,7 @@ $(document).ready(function(){
         }else{
           $('#display_message').html(
             `
-            <div id="display_message" class="col-md-6 alert alert-success" >
+            <div id="display_message" class="col-md-6 alert alert-danger" >
               ${res.error}
             </div>
           `
