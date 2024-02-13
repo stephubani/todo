@@ -56,29 +56,40 @@ $(document).ready(function(){
            var updateTodoRow = `
           <td>${rsp.data.name}</td>
           <td>${rsp.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
-          <td><input type='hidden' value= '${rsp.data.id}' class='todo_id'></td>
           <td>${rsp.data.created_at}</td>
           <td>${rsp.data.completed_at}</td>
-          <td><button class="btn delete_btn" id = 'deleteTodo_${rsp.data.id}'><i class="fa fa-trash text-danger"></i></button></td>
+          <td>
+            <input type='hidden' value= '${rsp.data.id}' class='todo_id'>
+            <button class="btn delete_btn" id = 'deleteTodo_${rsp.data.id}'><i class="fa fa-trash text-danger">
+            </i>
+            </button>
+          </td>
           `
           $('#display_message').html(
             `
-            <div id="display_message" class="col-md-6 alert alert-success" >
+            <div id="display_message" class="col-md-6 alert alert-success">
               ${rsp.message}
             </div>
           `
           )
+          setTimeout(function() {
+            $('#display_message').hide();
+          }, 2000);
+
           $(`#${todo_id}`).html(updateTodoRow);
           document.getElementById(`deleteTodo_${rsp.data.id}`).addEventListener('click', deleteTodo)
           
         }else{
           $('#display_message').html(
             `
-            <div id="display_message" class="col-md-6 alert alert-danger" >
+            <div id="display_message" class="col-md-6 alert alert-danger">
               ${rsp.error}
             </div>
           `
           )
+          setTimeout(function() {
+            $('#display_message').hide();
+          }, 2000);
         }
       
        
@@ -97,19 +108,12 @@ $(document).ready(function(){
       var response = confirm("Do you really want to delete this todo");
       if(response == true){
         var todo_id = $(event.target).closest('tr').find('.todo_id').val();
-        alert(todo_id)
 
         $.get('process/process_delete.php', {id:todo_id}, function(response){
           rsp = JSON.parse(response)
           if(rsp.success == true){
             $(`#${todo_id}`).remove();
-            $('#display_message').html(
-              `
-              <div id="display_message" class="col-md-6 alert alert-success" >
-                ${rsp.data}
-              </div>
-            `
-            )
+    
           }else{
             $('#display_message').html(
               `
@@ -118,6 +122,9 @@ $(document).ready(function(){
               </div>
             `
             )
+            setTimeout(function() {
+              $('#display_message').hide();
+            }, 2000);
           }
            
         
@@ -189,11 +196,15 @@ $(document).ready(function(){
         }else{
           $('#display_message').html(
             `
-            <div id="display_message" class="col-md-6 alert alert-danger" >
+            <div id="display_message" class="col-md-6 alert alert-danger">
               ${res.error}
             </div>
           `
           )
+
+          setTimeout(function() {
+            $('#display_message').hide();
+          }, 2000);
         }
        
        
