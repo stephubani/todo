@@ -68,20 +68,18 @@ $(document).ready(function(){
           `
           $('#displayMessageContainer').html(rsp.message)
           setTimeout(function() {
-            $('#displayMessageContainer').hide();
+            $('#displayMessageContainer').html('')
           }, 3000);
-          $('#displayMessageContainer').removeAttr('style')
       
 
           $(`#${todo_id}`).html(updateTodoRow);
           document.getElementById(`deleteTodo_${rsp.data.id}`).addEventListener('click', deleteTodo)
           
         }else{
-          $('#displayMessageContainer').html(rsp.error)
+          $('#displayMessageContainer').html(rsp.message)
           setTimeout(function() {
-            $('#displayMessageContainer').hide();
-          }, 2000);
-          $('#displayMessageContainer').removeAttr('style')
+            $('#displayMessageContainer').html('')
+          }, 3000);
         }
       
        
@@ -107,10 +105,10 @@ $(document).ready(function(){
             $(`#${todo_id}`).remove();
     
           }else{
-            $('#displayMessageContainer').html(rsp.data)
+            $('#displayMessageContainer').html(rsp.error)
             setTimeout(function() {
-              $('#displayMessageContainer').hide();
-            }, 2000);
+              $('#displayMessageContainer').html('')
+            }, 3000);
           }
            
         
@@ -183,10 +181,9 @@ $(document).ready(function(){
           
         }else{
           $('#displayMessageContainer').html(res.error)
-
           setTimeout(function() {
-            $('#displayMessageContainer').hide();
-          }, 2000);
+            $('#displayMessageContainer').html('')
+          }, 3000);
         }
        
        
