@@ -66,7 +66,7 @@ $all_todo = $todo->findAll();
                     </div>
                 </div>
 
-                <div id="display_message" class="col-md-6">
+                <div id="displayMessageContainer" class="col-md-6">
 
                 </div>
             </center>

@@ -51,6 +51,7 @@ $(document).ready(function(){
     function markAsCompleted(event){
       var todo_id =  $(event.target).closest('tr').find('.todo_id').val()
       $.get('process/process_update.php', {id: todo_id}, function(response){
+        console.log(response)
         var rsp = JSON.parse(response)
         if(rsp.success == true){
            var updateTodoRow = `
@@ -65,7 +66,7 @@ $(document).ready(function(){
             </button>
           </td>
           `
-          $('#display_message').html(
+          $('#displayMessageContainer').html(
             `
             <div id="display_message" class="col-md-6 alert alert-success">
               ${rsp.message}
@@ -74,13 +75,15 @@ $(document).ready(function(){
           )
           setTimeout(function() {
             $('#display_message').hide();
-          }, 2000);
+          }, 3000);
+          $('#display_message').removeAttr('style')
+      
 
           $(`#${todo_id}`).html(updateTodoRow);
           document.getElementById(`deleteTodo_${rsp.data.id}`).addEventListener('click', deleteTodo)
           
         }else{
-          $('#display_message').html(
+          $('#displayMessageContainer').html(
             `
             <div id="display_message" class="col-md-6 alert alert-danger">
               ${rsp.error}
@@ -115,7 +118,7 @@ $(document).ready(function(){
             $(`#${todo_id}`).remove();
     
           }else{
-            $('#display_message').html(
+            $('#displayMessageContainer').html(
               `
               <div id="display_message" class="col-md-6 alert alert-success" >
                 ${rsp.data}
@@ -151,7 +154,9 @@ $(document).ready(function(){
         data['id'] = todo_id
       }
       $.get('process/process_create.php', data , function(response){
+        console.log(response);
         const res = JSON.parse(response)
+        
         if(res.success){
         
           let html = ''
@@ -194,7 +199,7 @@ $(document).ready(function(){
           $('#saveButton').text('Add');
           
         }else{
-          $('#display_message').html(
+          $('#displayMessageContainer').html(
             `
             <div id="display_message" class="col-md-6 alert alert-danger">
               ${res.error}
