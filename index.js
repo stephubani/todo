@@ -66,33 +66,22 @@ $(document).ready(function(){
             </button>
           </td>
           `
-          $('#displayMessageContainer').html(
-            `
-            <div id="display_message" class="col-md-6 alert alert-success">
-              ${rsp.message}
-            </div>
-          `
-          )
+          $('#displayMessageContainer').html(rsp.message)
           setTimeout(function() {
-            $('#display_message').hide();
+            $('#displayMessageContainer').hide();
           }, 3000);
-          $('#display_message').removeAttr('style')
+          $('#displayMessageContainer').removeAttr('style')
       
 
           $(`#${todo_id}`).html(updateTodoRow);
           document.getElementById(`deleteTodo_${rsp.data.id}`).addEventListener('click', deleteTodo)
           
         }else{
-          $('#displayMessageContainer').html(
-            `
-            <div id="display_message" class="col-md-6 alert alert-danger">
-              ${rsp.error}
-            </div>
-          `
-          )
+          $('#displayMessageContainer').html(rsp.error)
           setTimeout(function() {
-            $('#display_message').hide();
+            $('#displayMessageContainer').hide();
           }, 2000);
+          $('#displayMessageContainer').removeAttr('style')
         }
       
        
@@ -118,15 +107,9 @@ $(document).ready(function(){
             $(`#${todo_id}`).remove();
     
           }else{
-            $('#displayMessageContainer').html(
-              `
-              <div id="display_message" class="col-md-6 alert alert-success" >
-                ${rsp.data}
-              </div>
-            `
-            )
+            $('#displayMessageContainer').html(rsp.data)
             setTimeout(function() {
-              $('#display_message').hide();
+              $('#displayMessageContainer').hide();
             }, 2000);
           }
            
@@ -199,16 +182,10 @@ $(document).ready(function(){
           $('#saveButton').text('Add');
           
         }else{
-          $('#displayMessageContainer').html(
-            `
-            <div id="display_message" class="col-md-6 alert alert-danger">
-              ${res.error}
-            </div>
-          `
-          )
+          $('#displayMessageContainer').html(res.error)
 
           setTimeout(function() {
-            $('#display_message').hide();
+            $('#displayMessageContainer').hide();
           }, 2000);
         }
        
