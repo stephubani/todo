@@ -1,6 +1,9 @@
 <?php
 error_reporting(E_ALL);
-require_once "classes/Todo.php";
+require_once "classes\Todo.php";
+
+use className\Todo;
+ 
 $todo = new Todo();
 $all_todo = $todo->findAll();
 ?>

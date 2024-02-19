@@ -4,7 +4,6 @@ $(document).ready(function(){
       var todo_name = $('#todo_name').val();
       $.post('process/process_create.php',{name : todo_name}, function(response){
           var newTodo = JSON.parse(response)
-          console.log(newTodo);
           todo_id = newTodo.id;
           var newTodoRow = `
           <tr id='${newTodo.id}'>
@@ -26,7 +25,6 @@ $(document).ready(function(){
           </tr>
           ` 
           $('tbody').prepend(newTodoRow);
-          console.log(newTodoRow);
           $('#todo_name').val('');
 
            document.getElementById(`mark_button_${newTodo.id}`).addEventListener('click',markAsCompleted)
@@ -51,7 +49,6 @@ $(document).ready(function(){
     function markAsCompleted(event){
       var todo_id =  $(event.target).closest('tr').find('.todo_id').val()
       $.get('process/process_update.php', {id: todo_id}, function(response){
-        console.log(response)
         var rsp = JSON.parse(response)
         if(rsp.success == true){
            var updateTodoRow = `
@@ -135,7 +132,6 @@ $(document).ready(function(){
         data['id'] = todo_id
       }
       $.get('process/process_create.php', data , function(response){
-        console.log(response);
         const res = JSON.parse(response)
         
         if(res.success){

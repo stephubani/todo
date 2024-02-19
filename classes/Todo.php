@@ -1,7 +1,11 @@
 <?php
+namespace className;
 require_once 'Db.php';
+use className\Db;
+
 
 class Todo extends Db{
+   
     public $id;
     public $name;
     public $is_completed;
@@ -21,11 +25,11 @@ class Todo extends Db{
             $sql = 'SELECT * FROM todo WHERE name=?';
             $statement = $this->dbconn->prepare($sql);
             $statement->execute([$name]);
-            $todo_name =$statement->fetchAll(PDO:: FETCH_ASSOC);
+            $todo_name =$statement->fetchAll(\PDO:: FETCH_ASSOC);
 
             return $todo_name ? true : false;
 
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             echo  $e->getMessage();
             exit();
               
@@ -45,7 +49,7 @@ class Todo extends Db{
                 return false;
             }
             
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             echo  $e->getMessage();
             exit();
         }
@@ -56,7 +60,7 @@ class Todo extends Db{
         $sql = 'SELECT * FROM todo ORDER BY id DESC';
         $statement = $this->dbconn->prepare($sql);
         $statement->execute();
-        $all_todo =$statement->fetchAll(PDO::FETCH_ASSOC);
+        $all_todo =$statement->fetchAll(\PDO::FETCH_ASSOC);
         // $all_todo =$statement->fetchAll(PDO::FETCH_CLASS,'Todo');
         $todos = [];
         if($all_todo){
@@ -81,7 +85,7 @@ class Todo extends Db{
         $sql = 'SELECT * FROM todo WHERE id = ?';
         $statement = $this->dbconn->prepare($sql);
         $statement->execute([$id]);
-        $todo = $statement->fetch( PDO::FETCH_ASSOC);
+        $todo = $statement->fetch( \PDO::FETCH_ASSOC);
         if($todo){
             $a_todo = new Todo();
             $a_todo->id=$todo['id'];
@@ -104,7 +108,7 @@ class Todo extends Db{
             $statement->execute([$name ,$date_updated, $id]);
             return true;
 
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
            $_SESSION['error_message']= "To do already exists";
            return false;
         }
@@ -131,5 +135,6 @@ class Todo extends Db{
 
     public function displayStatus(){
         return $this->is_completed == 0 ? "Not Completed" : "Completed" ;
-    }
+}
+    
 }

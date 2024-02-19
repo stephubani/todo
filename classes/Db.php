@@ -1,5 +1,11 @@
 <?php
+namespace className;
+
 require_once "Config.php";
+
+use Configure;
+
+
 
 class Db{
     private $dbhost = DBHOST;
@@ -13,13 +19,13 @@ class Db{
         $dsn = "mysql:host=$this->dbhost;dbname=$this->dbname;";
 
         $option = [
-            PDO ::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION
+            \PDO ::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION
         ];
 
         try{
-            $this->conn = new PDO($dsn, $this->dbuser,$this->dbpass,$option);
+            $this->conn = new \PDO($dsn, $this->dbuser,$this->dbpass,$option);
             return $this->conn;
-        }catch(Exception $e){
+        }catch(\Exception $e){
             $e->getMessage();
             return false;
         }
