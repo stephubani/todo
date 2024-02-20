@@ -10,18 +10,17 @@ if(isset($_GET['name'])){
     $id = isset($_GET['id']) ? $_GET['id'] : '';
 
     if(!empty($name )){
-        $todo = new Todo();
-        $todoNameExists =  $todo->doesTodoNameExist($name);
+        $todoNameExists =  Todo::doesTodoNameExist($name);
 
         if(!$todoNameExists){
             if(!empty($id)){
-                $todo->update($id,$name);
+                $todo = Todo::findById($id);
+                $todo->update($name);
             }else{
-                $id = $todo->create($name);  
+                $todo = Todo::create($name); 
+                
             }
-
-            $todo_data = $todo->findById($id);
-            $response = ['success'=> true, 'data'=>$todo_data];
+            $response = ['success'=> true, 'data'=>$todo];
             echo json_encode($response);
             exit();
         }else{

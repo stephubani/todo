@@ -13,17 +13,23 @@ class Todo extends Db{
     public $updated_at;
     public $completed_at;
 
-    private $dbconn ;
+    private static $dbconn;
 
-    public function __construct()
+    public function __construct($data)
     {
-        $this->dbconn = $this->connect();
+        $this->id=$data['id'] ?? null;
+        $this->name = $data['name'];
+        $this->created_at = $data['created_at'] ?? null;
+        $this->is_completed = $data['is_completed'] ?? null;
+        $this->updated_at = $data['updated_at'] ?? null;
+        $this->completed_at = $data['completed_at'] ?? null;
+        self::$dbconn = $this->connect();
     }
 
-    public function doesTodoNameExist($name){
+    public static function doesTodoNameExist($name){
         try{
             $sql = 'SELECT * FROM todo WHERE name=?';
-            $statement = $this->dbconn->prepare($sql);
+            $statement =  self::$dbconn->prepare($sql);
             $statement->execute([$name]);
             $todo_name =$statement->fetchAll(\PDO:: FETCH_ASSOC);
 
@@ -36,15 +42,15 @@ class Todo extends Db{
         }
     }
 
-    public function create($name){
+    public static function create($name){
         try{
         
             $date_format = date('Y-m-d h:i:s');
             $sql = 'INSERT INTO todo(name, created_at) VALUES(?,?)';
-            $statement = $this->dbconn->prepare($sql);
+            $statement = self::$dbconn->prepare($sql);
             $response=   $statement->execute([$name, $date_format]);
             if($response){
-                return $this->dbconn->lastInsertId();
+                return self::findById(self::$dbconn->lastInsertId());
             }else{
                 return false;
             }
@@ -56,23 +62,16 @@ class Todo extends Db{
 
     }
 
-    public function findAll(){
+    public static function findAll(){
         $sql = 'SELECT * FROM todo ORDER BY id DESC';
-        $statement = $this->dbconn->prepare($sql);
+        $statement = self::$dbconn->prepare($sql);
         $statement->execute();
         $all_todo =$statement->fetchAll(\PDO::FETCH_ASSOC);
         // $all_todo =$statement->fetchAll(PDO::FETCH_CLASS,'Todo');
         $todos = [];
         if($all_todo){
             foreach($all_todo as $todo){
-                $a_todo = new Todo();
-                $a_todo->id=$todo['id'];
-                $a_todo->name = $todo['name'];
-                $a_todo->created_at = $todo['created_at'];
-                $a_todo->is_completed = $todo['is_completed'];
-                $a_todo->updated_at = $todo['updated_at'];
-                $a_todo->completed_at = $todo['completed_at'];
-                
+                $a_todo = new Todo($todo);
                 $todos[] = $a_todo;
             }
             
@@ -81,31 +80,24 @@ class Todo extends Db{
 
     }
 
-    public function findById($id){
+    public static function findById($id){
         $sql = 'SELECT * FROM todo WHERE id = ?';
-        $statement = $this->dbconn->prepare($sql);
+        $statement = self::$dbconn->prepare($sql);
         $statement->execute([$id]);
         $todo = $statement->fetch( \PDO::FETCH_ASSOC);
         if($todo){
-            $a_todo = new Todo();
-            $a_todo->id=$todo['id'];
-            $a_todo->name = $todo['name'];
-            $a_todo->created_at = $todo['created_at'];
-            $a_todo->is_completed = $todo['is_completed'];
-            $a_todo->updated_at = $todo['updated_at'];
-            $a_todo->completed_at = $todo['completed_at'];
-            
+            $a_todo = new Todo($todo);
             return $a_todo;
         }
         return null;
     }
 
-    public function update($id , $name ){
+    public function update($name ){
         try{
             $date_updated = date('Y-m-d h:i:s');
             $sql = "UPDATE todo SET name=?, updated_at=? WHERE id=?";
-            $statement = $this->dbconn->prepare($sql);
-            $statement->execute([$name ,$date_updated, $id]);
+            $statement = self::$dbconn->prepare($sql);
+            $statement->execute([$name ,$date_updated, $this->id]);
             return true;
 
         }catch(\PDOException $e){
@@ -116,19 +108,20 @@ class Todo extends Db{
        
     }
 
-    public function markAsCompleted($id){
-        $date_completed = date('Y-m-d h:i:s');
+    public function markAsCompleted(){
+        $this->completed_at= date('Y-m-d h:i:s');
+        $this->is_completed = 1;
         $sql = "UPDATE todo SET completed_at=? ,is_completed = 1 WHERE id=?";
-        $statement = $this->dbconn->prepare($sql);
-        $updated = $statement->execute([$date_completed, $id]);
+        $statement = self::$dbconn->prepare($sql);
+        $updated = $statement->execute([$this->completed_at, $this->id]);
         
         return $updated;
     }
 
-    public function delete($id){
+    public function delete(){
         $sql = "DELETE FROM todo WHERE id=?";
-        $statement = $this->dbconn->prepare($sql);
-        $deleted = $statement->execute([$id]);
+        $statement = self::$dbconn->prepare($sql);
+        $deleted = $statement->execute([$this->id]);
         
         return $deleted ? true : false;
     } 

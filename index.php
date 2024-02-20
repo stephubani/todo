@@ -4,8 +4,8 @@ require_once "classes\Todo.php";
 
 use className\Todo;
  
-$todo = new Todo();
-$all_todo = $todo->findAll();
+$all_todo = Todo::findAll();
+
 ?>
 
 

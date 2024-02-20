@@ -9,17 +9,16 @@ use className\Todo;
 if (isset($_GET['id'])) {
     $todo_id = $_GET['id'];
 
-    $todo = new Todo();
-    $isCompleted = $todo->markAsCompleted($todo_id);
+    $todo = Todo::findById($todo_id);
+    $isCompleted = $todo->markAsCompleted();
 
     if ($isCompleted) {
-        $responseTodo = $todo->findById($todo_id);
-        $response = ['success' => true , 'data'=>$responseTodo, 'message' => 'Marked Successfully'];
+        $response = ['success' => true , 'data'=>$todo, 'message' => 'Marked Successfully'];
        
         echo json_encode($response);
     }else{
         $error = "We Couldnt Mark This To-Do At The Moment";
-        $response = ['sucess '=> false , 'error'=> $error];
+        $response = ['success '=> false , 'error'=> $error];
         echo json_encode($response);
     }
 }
