@@ -3,12 +3,17 @@ error_reporting(E_ALL);
 require_once "Db.php";
 
 
+
 class User {
-    public int $id;
-    public string $name;
-    public bool $is_active;
+    public  int $id;
+    public  string $name;
+    public  bool $is_active;
 
     public static $dbconn;
+
+    public static function linkPropertiesToDatabase($user){
+       
+    }
 
     public static function connectDatabase(){
         self::$dbconn = (new Db())->conn;
@@ -36,9 +41,20 @@ class User {
         $sql = 'SELECT * FROM users ORDER BY id DESC';
         $statement = self::$dbconn->prepare($sql);
         $statement->execute();
-        $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $allusers = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $users ? $users : false;
+        $users = [];
+        if($allusers){
+            foreach($allusers as $user){
+                $a_user = new User();
+                $a_user->id = $user['id'];
+                $a_user->name = $user['name'];
+                $a_user->is_active = $user['is_active'];
+                $users[] = $a_user;
+            }
+            return $users;
+           
+        }
 
     }
     

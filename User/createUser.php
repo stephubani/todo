@@ -50,7 +50,7 @@ $allUser = User::getAllUser();
                     <tbody id ="table_body">
                         <?php foreach($allUser as $user){ ?>
                         <tr>
-                            <td><?php echo $user['name']?></td>
+                            <td><?php echo $user->name?></td>
                         </tr>
                         <?php }
                         ?>
