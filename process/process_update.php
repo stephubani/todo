@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 
 require_once "../classes/Todo.php";
 
-use className\Todo;
+
 
 
 if (isset($_GET['id'])) {

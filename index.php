@@ -2,8 +2,6 @@
 error_reporting(E_ALL);
 require_once "classes\Todo.php";
 
-use className\Todo;
- 
 $all_todo = Todo::findAll();
 
 ?>
