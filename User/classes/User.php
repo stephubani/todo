@@ -15,8 +15,18 @@ class User {
        
     }
 
-    public static function connectDatabase(){
+    private static function connectDatabase(){
         self::$dbconn = (new Db())->conn;
+    }
+
+    public static function checkIfUserExists($name){
+        self::connectDatabase();
+        $sql = 'SELECT * FROM users WHERE name =?';
+        $statement= self::$dbconn->prepare($sql);
+        $statement->execute([$name]);
+        $user_name = $statement->fetch(PDO::FETCH_ASSOC);
+        
+        return $user_name ? $user_name : false;
     }
 
     public static function create($name){

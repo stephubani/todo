@@ -25,6 +25,8 @@ $(document).ready(function(){
                 setTimeout(function(){
                     $('.feedback').html('')
                 } , 3000)
+                $('#fullname').val('')
+               
             }
 
         })
