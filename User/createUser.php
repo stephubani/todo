@@ -42,7 +42,9 @@ $allUser = User::getAllUser();
                 <table class="table table-striped">
                     <thead>
                         <th>Name</th>
-                        <th>Contact</th>
+                        <th>Activate</th>
+                        <th>Edit</th>
+
                     </thead>
 
                     <tbody id ="table_body">
