@@ -1,8 +1,9 @@
 <?php
 error_reporting(E_ALL);
-require_once "classes/User.php";
+require_once "../classes/User.php";
 
 $allUser = User::getAllUser();
+
 
 
 ?>
@@ -51,6 +52,7 @@ $allUser = User::getAllUser();
                         <?php foreach($allUser as $user){ ?>
                         <tr>
                             <td><?php echo $user->name?></td>
+                            <td><?php echo $user->is_active?></td>
                         </tr>
                         <?php }
                         ?>

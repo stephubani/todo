@@ -41,9 +41,14 @@ class User {
         }
     }
 
-    public function getUserById(){
+    public static function getUserById($id){
         self::connectDatabase();
-        $sql= '';
+        $sql= 'SELECT * FROM users WHERE id = ?';
+        $statement = self::$dbconn->prepare($sql);
+        $statement->execute([$id]);
+        $user_details = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $user_details ? $user_details :  false;
     }
 
     public  static function getAllUser(){

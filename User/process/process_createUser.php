@@ -1,18 +1,20 @@
 <?php
 error_reporting(E_ALL);
-require_once '../classes/User.php';
+require_once '../../classes/User.php';
 
-if(isset($_POST)){
+if(isset($_POST) && isset($_POST['name'])){
+   
     $name = $_POST['name'];
 
     $userExist = User::checkIfUserExists($name);
     if(!$userExist){
-        $response = User::create($name);
-        if($response){
-        $success_message = 'Registration Successful';
+        $user_id = User::create($name);
+        if($user_id){
+            $userDetails = User::getUserById($user_id);
+            $success_message = 'Registration Successful';
         
-        $response = ['success'=> true , 'message'=> $success_message , 'data' => $name];
-        echo json_encode($response);
+            $response = ['success'=> true , 'message'=> $success_message , 'data' => $userDetails];
+            echo json_encode($response);
         }else{
             $error_message = 'Registration Unsuccessful';
 

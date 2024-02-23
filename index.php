@@ -35,7 +35,7 @@ $all_todo = Todo::findAll();
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link active redesigned" aria-current="page" href="create.php" style="font-size: 15px;">Add To Do</a>
+                                    <a class="nav-link active redesigned" aria-current="page" href="User/user.php" style="font-size: 15px;">Users</a>
                                 </li>
 
 

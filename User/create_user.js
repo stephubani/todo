@@ -1,7 +1,6 @@
 $(document).ready(function(){
     $('.register').click(function(){
         var fullname =   $('#fullname').val();
-
         var url = 'process/process_createUser.php'
         $.post(url , {name:fullname} , function(response){
             console.log(response);
@@ -9,7 +8,8 @@ $(document).ready(function(){
             if(rsp.success == true){
                 newRow = `
                 <tr>
-                   <td>${rsp.data}</td>
+                   <td>${rsp.data[0].name}</td>
+                   <td>${rsp.data[0].is_active}</td>
                 </tr>
                 `
                 $('#table_body').prepend(newRow)
