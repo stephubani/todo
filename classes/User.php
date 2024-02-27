@@ -69,11 +69,18 @@ class User {
             }
             return $users;
            
+        }else{
+            return [];
         }
 
     }
     
-    public function update(){
+    public  function update($name, $id){
+        $sql = 'UPDATE users SET name=? WHERE id=?';
+        $statement = self::$dbconn->prepare($sql);
+        $response = $statement->execute([$name, $id]);
+
+        return $response ? true : false;
 
     }
 

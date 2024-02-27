@@ -2,36 +2,53 @@
 error_reporting(E_ALL);
 require_once '../../classes/User.php';
 
-if(isset($_POST) && isset($_POST['name'])){
-   
+if($_POST){
+    $userid = isset($_POST['user_id']) ? $_POST['user_id'] :  '';
     $name = $_POST['name'];
 
-    $userExist = User::checkIfUserExists($name);
-    if(!$userExist){
-        $user_id = User::create($name);
-        if($user_id){
-            $userDetails = User::getUserById($user_id);
-            $success_message = 'Registration Successful';
-        
-            $response = ['success'=> true , 'message'=> $success_message , 'data' => $userDetails];
-            echo json_encode($response);
-        }else{
-            $error_message = 'Registration Unsuccessful';
+        if(!empty($name)){
+            $userExist = User::checkIfUserExists($name);
+            if(!$userExist){
+                if(!empty($userid)){
+                    $user = new User();
+                    $updated = $user->update($name , $userid);
+                    if($updated){
+                        $userDetails = User::getUserById($userid);
+                        $success_message = 'Updated Successful';
+                    
+                        $response = ['success'=> true , 'message'=> $success_message , 'data' => $userDetails];
+                        echo json_encode($response);
+                    }else{
+                        $error_message = 'Something Occured Please Wait A Moment';
+                    
+                        $response = ['success'=> false , 'message'=> $error_message];
+                        echo json_encode($response);
+                    }
 
-            $response = ['success' => false , 'message' => $error_message];
+                }else{
+                    $user_id = User::create($name);
+                    $userDetails = User::getUserById($user_id);
+                    $success_message = 'Registration Successful';
+                    
+                    $response = ['success'=> true , 'message'=> $success_message , 'data' => $userDetails];
+                    echo json_encode($response);
+                }
+                
+              
+            }else{
+                $error_message = 'Username Must Be Unique';
+                    
+                $response = ['success'=> false , 'message'=> $error_message ];
+                echo json_encode($response);
+            }
+        }else{
+            $error_message = 'A Username is Required To Continue....';
+                    
+            $response = ['success'=> false , 'message'=> $error_message ];
             echo json_encode($response);
         }
-    }else{
-        $error_message = 'Name must be Unique';
-        $Response  = ['success'=> false , 'message'=> $error_message];
-        echo json_encode($Response);
-    }
-
-   
-
-   
-
-    
-    
-
+      
+        
+}else{
+    echo ' hello something is wrong';
 }
