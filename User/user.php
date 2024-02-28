@@ -25,9 +25,9 @@ $allUser = User::getAllUser();
                 <h1>Welcome To To-Do!</h1>
                 <p>Please fill this form to register as a user</p>
                     <label for="Fullname">Full-Name
-                        <input type="text" name="fullname" id="fullname" class="form-control">
-                        <input type="hidden" name="user_id" id="userid" value="">
-                    </label>
+                        <input type="text" name="fullname" id="fullname" class="form-control" value=""> 
+                    </label> 
+                    <input type="hidden" name="user_id" id="userid" value="">
 
                     <button type="submit" class="btn btn-primary" id="user_button">Register</button>
             </div>
@@ -52,8 +52,14 @@ $allUser = User::getAllUser();
                     <tbody id ="table_body">
                         <?php foreach($allUser as $user){ ?>
                         <tr id="<?php echo $user->id?>">
-                            <td class="username"><?php echo $user->name?></td>
-                            <td class="is_active"><?php echo $user->is_active?></td>
+                            <td class="username">
+                                <?php echo $user->name?>
+                            </td>
+                            <td class="is_active"> 
+                                <button class="btn btn-primary">
+                                 <?php echo $user->displayStatusOfUser()?>
+                               </button>
+                            </td>
                             <td>  
                                 <button class='btn btn-primary edit_btn' id='editUser_<?php echo $user->id ?>'>
                                     <input type="hidden" class="user_id" value="<?php echo $user->id ?>">

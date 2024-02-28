@@ -88,7 +88,7 @@ $(document).ready(function(){
    
 
 
-   
+
     $('.delete_btn').click(function(event){
       deleteTodo(event);
     })
@@ -134,6 +134,7 @@ $(document).ready(function(){
         data['id'] = todo_id
       }
       $.get('process/process_create.php', data , function(response){
+        console.log(response)
         const res = JSON.parse(response)
         
         if(res.success){

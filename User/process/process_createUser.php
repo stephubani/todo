@@ -10,13 +10,12 @@ if($_POST){
             $userExist = User::checkIfUserExists($name);
             if(!$userExist){
                 if(!empty($userid)){
-                    $user = new User();
+                    $user = User::getUserById($userid);
                     $updated = $user->update($name , $userid);
                     if($updated){
-                        $userDetails = User::getUserById($userid);
                         $success_message = 'Updated Successful';
                     
-                        $response = ['success'=> true , 'message'=> $success_message , 'data' => $userDetails];
+                        $response = ['success'=> true , 'message'=> $success_message , 'data' => $user];
                         echo json_encode($response);
                     }else{
                         $error_message = 'Something Occured Please Wait A Moment';

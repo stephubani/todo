@@ -104,7 +104,7 @@ class Todo{
             self::setDbConnection();
             $date_updated = date('Y-m-d h:i:s');
             $sql = "UPDATE todo SET name=?, updated_at=? WHERE id=?";
-            $statement = $this->dbconn->prepare($sql);
+            $statement = self::$dbconn->prepare($sql);
             $statement->execute([$name ,$date_updated, $this->id]);
             return true;
 

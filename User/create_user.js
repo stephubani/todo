@@ -14,15 +14,14 @@ $(document).ready(function(){
             if(rsp.success == true){
                 let html = ''
                 if(user_id == ''){
-                    html += `<tr id= '${rsp.data[0].id}'>`
+                    html += `<tr id= '${rsp.data.id}'>`
                 }
                 html += `
-                
-                    <td class='username'>${rsp.data[0].name}</td>
-                    <td>${rsp.data[0].is_active}</td>
+                    <td class='username'>${rsp.data.name}</td>
+                    <td>${rsp.data.is_active}</td>
                     <td>  
-                        <button class='btn btn-primary edit_btn' id='editUser_${rsp.data[0].id}'>
-                            <input type="hidden" class="user_id" value="${rsp.data[0].id}">
+                        <button class='btn btn-primary edit_btn' id='editUser_${rsp.data.id}'>
+                            <input type="hidden" class="user_id" value="${rsp.data.id}">
                             <i class="fa-solid fa-pen"></i>
                         </button>
                     </td>
@@ -36,7 +35,7 @@ $(document).ready(function(){
                 }else{
                     $(`#${user_id}`).html(html)
                 }
-               
+
                 $('.feedback').html(rsp.message)
                 setTimeout(function(){
                     $('.feedback').html('')
@@ -45,14 +44,14 @@ $(document).ready(function(){
                 $('#fullname').val('')
                 $('#user_button').text('Register')
 
-                document.getElementById(`editUser_${rsp.data[0].id}`).addEventListener('click', editUser)
+                document.getElementById(`editUser_${rsp.data.id}`).addEventListener('click', editUser)
                
             }else{
                 $('.feedback').html(rsp.message)
                 setTimeout(function(){
                     $('.feedback').html('')
                 } , 3000)
-                $('#fullname').val('')
+                $('#fullname').val()
                
             }
 
@@ -61,6 +60,7 @@ $(document).ready(function(){
     })
 
     function editUser(event){
+
         var userName = $(event.target).closest('tr').find('.username').text()
         var user_id = $(event.target).closest('tr').find('.user_id').val()
         $('#userid').val(user_id)
@@ -71,6 +71,5 @@ $(document).ready(function(){
 
     $('.edit_btn').click(function(event){
        editUser(event)
-       
     })
 })
