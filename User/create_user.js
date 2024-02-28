@@ -114,6 +114,7 @@ $(document).ready(function(){
                 }
 
                 document.getElementById(`editUser_${rsp.data.id}`).addEventListener('click', editUser)
+                document.getElementById(`status_${rsp.data.id}`).addEventListener('click', activateUser)
                
                
             }
