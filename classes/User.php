@@ -32,10 +32,11 @@ class User {
     public static function create($name){
         $user = new User();
         $user->name = $name;
+        $user->is_active = 0;
         self::connectDatabase();
-        $sql = 'INSERT INTO users(name) VALUES(?)';
+        $sql = 'INSERT INTO users(name , is_active) VALUES(?,?)';
         $statement = self::$dbconn->prepare($sql);
-        $response = $statement->execute([$user->name]);
+        $response = $statement->execute([$user->name , $user->is_active]);
         if($response){
             return $user->id = self::$dbconn->lastInsertId();
         }else{
@@ -51,16 +52,16 @@ class User {
         $statement->execute([$id]);
         $a_user = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        // echo '<pre>';
-        // print_r($a_user);
-        // die();
+    
 
         if($a_user){
             $user = new User();
             $user->id = $a_user[0]['id'];
             $user->name = $a_user[0]['name'];
             $user->is_active = $a_user[0]['is_active'];
+
             return $user;
+
         }
         return null;
 
@@ -101,13 +102,25 @@ class User {
     }
 
     public function activateUser(){
+        $this->is_active = 1;
+        self::connectDatabase();
+        $sql = 'UPDATE users SET is_active = 1 WHERE id=?';
+        $statement = self::$dbconn->prepare($sql);
+        $response = $statement->execute([$this->id]);
 
+        return $response ? true : false;
     }
     public function deactivateUser(){
-        
+        $this->is_active = 0;
+        self::connectDatabase();
+        $sql = 'UPDATE users SET is_active = 0 WHERE id=?';
+        $statement = self::$dbconn->prepare($sql);
+        $response = $statement->execute([$this->id]);
+
+        return $response ? true : false;
     }
 
     public function displayStatusOfUser(){
-        return $this->is_active == 0 ? 'Active' : 'Deactive';
+        return $this->is_active == 0 ? 'Unactive' : 'Active';
     }
 }

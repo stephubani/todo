@@ -56,9 +56,20 @@ $allUser = User::getAllUser();
                                 <?php echo $user->name?>
                             </td>
                             <td class="is_active"> 
-                                <button class="btn btn-primary">
-                                 <?php echo $user->displayStatusOfUser()?>
-                               </button>
+                                 <?php if($user->is_active == 0){
+                                ?>
+                                    <button class="btn btn-secondary status" id="status_<?php echo $user->id?>">
+                                        <?php echo $user->displayStatusOfUser()?>
+                                    </button>
+                                <?php
+                                   }else{
+                                    echo "<button class='btn btn-primary status' id='status_" . $user->id . "'>";
+                                    echo $user->displayStatusOfUser();
+                                    echo "</button>";
+                                }                                
+                                ?>
+
+                              
                             </td>
                             <td>  
                                 <button class='btn btn-primary edit_btn' id='editUser_<?php echo $user->id ?>'>
