@@ -1,8 +1,11 @@
 <?php
 error_reporting(E_ALL);
-require_once "classes\Todo.php";
+require_once "classes/Todo.php";
+require_once 'classes/User.php';
 
 $all_todo = Todo::findAll();
+$active_users = User::selectAllActiveUsers();
+
 
 ?>
 
@@ -71,6 +74,20 @@ $all_todo = Todo::findAll();
 
                 </div>
             </center>
+        </div>
+
+        <div>
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    <h5>Active Users</h5>
+                    <select name="" class="form-select" id="">
+                        <?php foreach($active_users as $user){ ?>
+                            <option value="<?php echo $user->id?>"><?php echo $user->name?></option>
+                        <?php } ?>
+                       
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div class="row">

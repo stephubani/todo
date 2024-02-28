@@ -15,10 +15,8 @@ if(isset($_GET['name'])){
         if(!$todoNameExists){
             if(!empty($id)){
                 $todo = Todo::findById($id);
-                // echo '<pre>';
-                // print_r($todo);
-                // exit();
                 $todo->update($name);
+                
             }else{
                 $todo = Todo::create($name); 
                 

@@ -120,6 +120,30 @@ class User {
         return $response ? true : false;
     }
 
+    public static function selectAllActiveUsers(){
+        self::connectDatabase();
+        $sql = 'SELECT * FROM users WHERE is_active = 1';
+        $statement = self::$dbconn->prepare($sql);
+        $statement->execute();
+        $active_users = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $allActiveUsers = [];
+        if($active_users){
+            foreach($active_users as $users){
+                $an_ActiveUser = new User();
+                $an_ActiveUser->id = $users['id'];
+                $an_ActiveUser->name = $users['name'];
+                $an_ActiveUser->is_active = $users['is_active'];
+
+                $allActiveUsers[] = $an_ActiveUser;
+            }
+            return $allActiveUsers;
+        }else{
+            return [];
+        }
+        
+    }
+
     public function displayStatusOfUser(){
         return $this->is_active == 0 ? 'Unactive' : 'Active';
     }
