@@ -11,8 +11,25 @@ class User {
 
     public static $dbconn;
 
-    public static function linkPropertiesToDatabase($user){
-       
+    public  function linkPropertiesToDatabase(){
+       if(!isset($this->id)){
+            $sql = 'INSERT INTO users(name , is_active) VALUES(?,?)';
+            $statement = self::$dbconn->prepare($sql);
+            $response = $statement->execute([$this->name , $this->is_active]);
+            if($response){
+                $this->id = self::$dbconn->lastInsertId();
+                return $this->id ;
+
+            }else{
+                return false;
+            }
+        }else{
+            $sql = 'UPDATE users SET name=? , is_active=? WHERE id=?';
+            $statement = self::$dbconn->prepare($sql);
+            $response = $statement->execute([$this->name, $this->is_active , $this->id]);
+
+            return $response ? true : false;
+        }
     }
 
     private static function connectDatabase(){
@@ -34,14 +51,7 @@ class User {
         $user->name = $name;
         $user->is_active = 0;
         self::connectDatabase();
-        $sql = 'INSERT INTO users(name , is_active) VALUES(?,?)';
-        $statement = self::$dbconn->prepare($sql);
-        $response = $statement->execute([$user->name , $user->is_active]);
-        if($response){
-            return $user->id = self::$dbconn->lastInsertId();
-        }else{
-            return false;
-        }
+        return $user->linkPropertiesToDatabase();
     }
    
 
@@ -92,32 +102,19 @@ class User {
     }
     
     public  function update($name){
-        $this->name = $name;
-        $sql = 'UPDATE users SET name=? WHERE id=?';
-        $statement = self::$dbconn->prepare($sql);
-        $response = $statement->execute([$this->name, $this->id]);
-
-        return $response ? true : false;
+      $this->name = $name;
+      $this->is_active = 0;
+        return $this->linkPropertiesToDatabase();
 
     }
 
-    public function activateUser(){
-        $this->is_active = 1;
-        self::connectDatabase();
-        $sql = 'UPDATE users SET is_active = 1 WHERE id=?';
-        $statement = self::$dbconn->prepare($sql);
-        $response = $statement->execute([$this->id]);
 
-        return $response ? true : false;
-    }
-    public function deactivateUser(){
-        $this->is_active = 0;
+    public function UserStatus(){
         self::connectDatabase();
-        $sql = 'UPDATE users SET is_active = 0 WHERE id=?';
-        $statement = self::$dbconn->prepare($sql);
-        $response = $statement->execute([$this->id]);
+        $this->is_active = ($this->is_active == 0) ? 1 : 0;
+        return $this->linkPropertiesToDatabase();
+       
 
-        return $response ? true : false;
     }
 
     public static function selectAllActiveUsers(){

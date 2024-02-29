@@ -191,7 +191,24 @@ $(document).ready(function(){
 
 
   
+  
+      $.post('process/process_get_activeuser.php', function(response) {
+        console.log(response)
+        var rsp = JSON.parse(response)
+        if(rsp.success == true){
+          html = `
+          <option value="${rsp.data.id}" class="activeuser">${rsp.data.name}</option>
+          `
+          $('#alluser').prepend(html)
+        }else{
+          $('#displayMessageContainer').html(rsp.message)
+          setTimeout(function() {
+            $('#displayMessageContainer').html('')
+          }, 3000);
+        }
+    });
     
+ 
 
 
 })

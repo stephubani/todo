@@ -11,7 +11,8 @@ if($_POST){
             if(!$userExist){
                 if(!empty($userid)){
                     $user = User::getUserById($userid);
-                    $updated = $user->update($name , $userid);
+                    $updated = $user->update($name);
+
                     if($updated){
                         $success_message = 'Updated Successful';
                     

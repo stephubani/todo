@@ -80,9 +80,9 @@ $active_users = User::selectAllActiveUsers();
             <div class="row mb-5">
                 <div class="col-md-4">
                     <h5>Active Users</h5>
-                    <select name="" class="form-select" id="">
+                    <select name="" class="form-select" id="alluser">
                         <?php foreach($active_users as $user){ ?>
-                            <option value="<?php echo $user->id?>"><?php echo $user->name?></option>
+                            <option value="<?php echo $user->id?>" class="activeuser"><?php echo $user->name?></option>
                         <?php } ?>
                        
                     </select>

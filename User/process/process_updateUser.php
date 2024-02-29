@@ -5,34 +5,34 @@ require_once '../../classes/User.php';
 if($_POST){
     $userid = isset($_POST['user_id']) ? $_POST['user_id'] :  '';
     $user = User::getUserById($userid);
-   
-    if($user->is_active == false){
-        $userActive = $user->activateUser();
-
-        if($userActive){
-            $response = ['success' => true , 'data'=>$user, 'message' => 'Activated User Successfully'];
     
-            echo json_encode($response);
-        }else{
-            $response = ['success' => false ,  'message' => 'We couldnt activate this user now'];
+    
+    if ($user->is_active == false) {
         
+        $activation_result = $user->UserStatus();
+        
+        if ($activation_result) {
+            $response = ['success' => true , 'data' => $user, 'message' => 'Activated User Successfully'];
+            echo json_encode($response);
+        } else {
+            $response = ['success' => false ,  'message' => 'Failed to activate user'];
             echo json_encode($response);
         }
-    }else{
-        $userUnactive = $user->deactivateUser();
-        if($userUnactive){
-            $response = ['success' => true , 'data'=>$user, 'message' => 'Activated User Successfully'];
-    
-            echo json_encode($response);
-        }else{
-            $response = ['success' => false ,  'message' => 'We couldnt activate this user now'];
+    } else {
         
-            echo json_encode($response);
-        }    
-       
+        $deactivation_result = $user->UserStatus();
         
+        if ($deactivation_result) {
+            $response = ['success' => true , 'data' => $user, 'message' => 'Deactivated User Successfully'];
+            echo json_encode($response);
+        } else {
+            $response = ['success' => false ,  'message' => 'Failed to deactivate user'];
+            echo json_encode($response);
+        }
     }
   
+    
+   
 
  
         
