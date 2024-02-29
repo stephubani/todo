@@ -12,6 +12,8 @@ class Todo{
     public $created_at;
     public $updated_at;
     public $completed_at;
+    public $users_id ;
+    public $users_name;
 
     private static $dbconn;
 
@@ -23,6 +25,9 @@ class Todo{
         $this->is_completed = $data['is_completed'] ?? null;
         $this->updated_at = $data['updated_at'] ?? null;
         $this->completed_at = $data['completed_at'] ?? null;
+        $this->users_id = $data['users_id']?? null ; 
+        $this->users_name = $data['users_name']?? null ;
+        
       
     }
 
@@ -47,13 +52,13 @@ class Todo{
         }
     }
 
-    public static function create($name){
+    public static function create($name , $users_id){
         try{
             self::setDbConnection();
             $date_format = date('Y-m-d h:i:s');
-            $sql = 'INSERT INTO todo(name, created_at) VALUES(?,?)';
+            $sql = 'INSERT INTO todo(name, created_at , users_id) VALUES(?,?,?)';
             $statement = self::$dbconn->prepare($sql);
-            $response=   $statement->execute([$name, $date_format]);
+            $response=   $statement->execute([$name, $date_format , $users_id]);
             if($response){
                 return self::findById(self::$dbconn->lastInsertId()); 
             }else{
@@ -69,16 +74,20 @@ class Todo{
 
     public static function findAll(){
         self::setDbConnection();
-        $sql = 'SELECT * FROM todo ORDER BY id DESC';
+        $sql = 'SELECT * FROM todo INNER JOIN users ON todo.users_id = users.users_id ORDER BY todo.id DESC';
         $statement = self::$dbconn->prepare($sql);
         $statement->execute();
         $all_todo =$statement->fetchAll(PDO::FETCH_ASSOC);
+       
         // $all_todo =$statement->fetchAll(PDO::FETCH_CLASS,'Todo');
         $todos = [];
         if($all_todo){
             foreach($all_todo as $todo){
+                
                 $a_todo = new Todo($todo);
+                $a_todo->users_name = $todo['users_name'];
                 $todos[] = $a_todo;
+            
             }
             
         }
@@ -88,13 +97,16 @@ class Todo{
 
     public static function findById($id){
         self::setDbConnection();
-        $sql = 'SELECT * FROM todo WHERE id = ?';
+        $sql = 'SELECT * FROM todo INNER JOIN users ON todo.users_id = users.users_id WHERE id = ?';
         $statement = self::$dbconn->prepare($sql);
         $statement->execute([$id]);
         $todo = $statement->fetch( PDO::FETCH_ASSOC);
+          
         if($todo){
             $a_todo = new Todo($todo);
-            return $a_todo;
+            $a_todo->users_name = $todo['users_name'];
+          
+             return $a_todo;
         }
         return null;
     }

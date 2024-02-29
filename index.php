@@ -7,6 +7,8 @@ $all_todo = Todo::findAll();
 $active_users = User::selectAllActiveUsers();
 
 
+
+
 ?>
 
 
@@ -80,12 +82,15 @@ $active_users = User::selectAllActiveUsers();
             <div class="row mb-5">
                 <div class="col-md-4">
                     <h5>Active Users</h5>
-                    <select name="" class="form-select" id="alluser">
+                    <form action="">
+                        <select name="" class="form-select" id="alluser">
                         <?php foreach($active_users as $user){ ?>
-                            <option value="<?php echo $user->id?>" class="activeuser"><?php echo $user->name?></option>
+                            <option value="<?php echo $user->users_id?>" class="activeuser" id="users"><?php echo $user->users_name?></option>
                         <?php } ?>
                        
                     </select>
+                    </form>
+                   
                 </div>
             </div>
         </div>
@@ -95,6 +100,7 @@ $active_users = User::selectAllActiveUsers();
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>User</th>
                             <th>Name</th>
                             <th>Status</th>
                             <th>Date Created</th>
@@ -107,6 +113,7 @@ $active_users = User::selectAllActiveUsers();
                     <tbody>
                         <?php foreach($all_todo as $todo ){ ?>
                             <tr class="new_tr" id='<?php echo $todo->id ?>'>
+                                <td><?php echo $todo->users_name?></td>
                                 <td class='todo_name'><?php echo $todo->name ?></td>
                                 <td id="todo_status"><?php echo $todo->displayStatus() ?></td>
                                 <td><?php echo $todo->created_at ?></td>
@@ -122,10 +129,11 @@ $active_users = User::selectAllActiveUsers();
                                             <i class="fa-solid fa-pen"></i>
                                         </button>
                                     <?php } ?>
-                                    <!-- <a href="process/process_delete.php?id=<?php echo $todo->id ?>"> -->
-                                    <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
-                                    <button class="btn delete_btn" ><i class="fa fa-trash text-danger"></i></button>
-                                <!-- </a> -->
+                                        <input type='hidden' value= '<?php echo $todo->id?>' class='todo_id'>
+                                        <button class="btn delete_btn" id = 'deleteTodo_<?php echo $todo->id?>'><i class="fa fa-trash text-danger">
+                                        </i>
+                                        </button>
+
                                 </td>
                                
                             </tr> 

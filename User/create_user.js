@@ -15,19 +15,19 @@ $(document).ready(function(){
             if(rsp.success == true){
                 let html = ''
                 if(user_id == ''){
-                    html += `<tr id= '${rsp.data.id}'>`
+                    html += `<tr id= '${rsp.data.users_id}'>`
                 }
                 html += `
-                    <td class='username'>${rsp.data.name}</td>
+                    <td class='username'>${rsp.data.users_name}</td>
                     <td>
-                        <button class = 'btn btn-secondary status'id='status_${rsp.data.id}'>
+                        <button class = 'btn btn-secondary status'id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}
                         </button>
                         
                     </td>
                     <td>  
-                        <button class='btn btn-primary edit_btn' id='editUser_${rsp.data.id}'>
-                            <input type="hidden" class="user_id" value="${rsp.data.id}">
+                        <button class='btn btn-primary edit_btn' id='editUser_${rsp.data.users_id}'>
+                            <input type="hidden" class="user_id" value="${rsp.data.users_id}">
                             <i class="fa-solid fa-pen"></i>
                         </button>
                     </td>
@@ -50,8 +50,8 @@ $(document).ready(function(){
                 $('#fullname').val('')
                 $('#user_button').text('Register')
 
-                document.getElementById(`editUser_${rsp.data.id}`).addEventListener('click', editUser)
-                document.getElementById(`status_${rsp.data.id}`).addEventListener('click', activateUser)
+                document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
+                document.getElementById(`status_${rsp.data.users_id}`).addEventListener('click', activateUser)
                
             }else{
                 $('.feedback').html(rsp.message)
@@ -92,29 +92,29 @@ $(document).ready(function(){
             if(rsp.success == true){
                 let html = ''
                 html = `
-                    <td class='username'>${rsp.data.name}</td>
+                    <td class='username'>${rsp.data.users_name}</td>
                     <td>
-                        <button class = 'btn btn-secondary status' id='status_${rsp.data.id}'>
+                        <button class = 'btn btn-secondary status' id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}
                         </button>
                         
                     </td>
                     <td> 
-                        <button class='btn btn-primary edit_btn' id='editUser_${rsp.data.id}'>
-                            <input type="hidden" class="user_id" value="${rsp.data.id}">
+                        <button class='btn btn-primary edit_btn' id='editUser_${rsp.data.users_id}'>
+                            <input type="hidden" class="user_id" value="${rsp.data.users_id}">
                             <i class="fa-solid fa-pen"></i>
                         </button>
                     </td>
                 `
                 $(`#${user_id}`).html(html)
                 if (rsp.data.is_active == true) {
-                    $(`#status_${rsp.data.id}`).removeClass('btn-secondary').addClass('btn-primary');
+                    $(`#status_${rsp.data.users_id}`).removeClass('btn-secondary').addClass('btn-primary');
                 } else {
-                    $(`#status_${rsp.data.id}`).removeClass('btn-primary').addClass('btn-secondary');
+                    $(`#status_${rsp.data.users_id}`).removeClass('btn-primary').addClass('btn-secondary');
                 }
 
-                document.getElementById(`editUser_${rsp.data.id}`).addEventListener('click', editUser)
-                document.getElementById(`status_${rsp.data.id}`).addEventListener('click', activateUser)
+                document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
+                document.getElementById(`status_${rsp.data.users_id}`).addEventListener('click', activateUser)
                
                
             }

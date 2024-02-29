@@ -51,19 +51,19 @@ $allUser = User::getAllUser();
 
                     <tbody id ="table_body">
                         <?php foreach($allUser as $user){ ?>
-                        <tr id="<?php echo $user->id?>">
+                        <tr id="<?php echo $user->users_id?>">
                             <td class="username">
-                                <?php echo $user->name?>
+                                <?php echo $user->users_name?>
                             </td>
                             <td class="is_active"> 
                                  <?php if($user->is_active == 0){
                                 ?>
-                                    <button class="btn btn-secondary status" id="status_<?php echo $user->id?>">
+                                    <button class="btn btn-secondary status" id="status_<?php echo $user->users_id?>">
                                         <?php echo $user->displayStatusOfUser()?>
                                     </button>
                                 <?php
                                    }else{
-                                    echo "<button class='btn btn-primary status' id='status_" . $user->id . "'>";
+                                    echo "<button class='btn btn-primary status' id='status_" . $user->users_id . "'>";
                                     echo $user->displayStatusOfUser();
                                     echo "</button>";
                                 }                                
@@ -72,8 +72,8 @@ $allUser = User::getAllUser();
                               
                             </td>
                             <td>  
-                                <button class='btn btn-primary edit_btn' id='editUser_<?php echo $user->id ?>'>
-                                    <input type="hidden" class="user_id" value="<?php echo $user->id ?>">
+                                <button class='btn btn-primary edit_btn' id='editUser_<?php echo $user->users_id ?>'>
+                                    <input type="hidden" class="user_id" value="<?php echo $user->users_id ?>">
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
                             </td>

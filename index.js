@@ -7,6 +7,7 @@ $(document).ready(function(){
           todo_id = newTodo.id;
           var newTodoRow = `
           <tr id='${newTodo.id}'>
+            <td class="username">${newTodo.users_name}</td>
             <td class='todo_name'>${newTodo.name}</td>
             <td>${newTodo.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
             <td>${newTodo.created_at}</td>
@@ -49,9 +50,12 @@ $(document).ready(function(){
     function markAsCompleted(event){
       var todo_id =  $(event.target).closest('tr').find('.todo_id').val()
       $.get('process/process_update.php', {id: todo_id}, function(response){
+         
         var rsp = JSON.parse(response)
+       
         if(rsp.success == true){
-           var updateTodoRow = `
+          var updateTodoRow = `
+          <td class="username">${rsp.data.users_name}</td>
           <td>${rsp.data.name}</td>
           <td>${rsp.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
           <td>${rsp.data.created_at}</td>
@@ -124,11 +128,17 @@ $(document).ready(function(){
       
     }
 
-    $('#saveButton').click(function() {
+   
+
+    $('#saveButton').click(function(event) {
       var todo_name = $('#todo_name').val()
-      var todo_id = $('#atodo_id').val(); 
+      var todo_id = $('#atodo_id').val();
+      var user_id = $('#alluser').val();
+     
       let data = {
-        name : todo_name
+        name : todo_name,
+        user_id : user_id
+
       }
       if(todo_id != '' ){
         data['id'] = todo_id
@@ -144,7 +154,7 @@ $(document).ready(function(){
             html += `<tr id = ${res.data.id}>`
           }
           html += `
-        
+            <td class="username">${res.data.users_name}</td>
             <td class='todo_name'>${res.data.name}</td>
             <td>${res.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
             <td>${res.data.created_at}</td>
@@ -197,7 +207,7 @@ $(document).ready(function(){
         var rsp = JSON.parse(response)
         if(rsp.success == true){
           html = `
-          <option value="${rsp.data.id}" class="activeuser">${rsp.data.name}</option>
+          <option value="${rsp.data[0].id}" class="activeuser">${rsp.data[0].name}</option>
           `
           $('#alluser').prepend(html)
         }else{

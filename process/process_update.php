@@ -10,6 +10,8 @@ if (isset($_GET['id'])) {
     $todo_id = $_GET['id'];
 
     $todo = Todo::findById($todo_id);
+   
+    
     $isCompleted = $todo->markAsCompleted();
 
     if ($isCompleted) {

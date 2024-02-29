@@ -6,6 +6,7 @@ require_once('../classes/Todo.php');
 
 if(isset($_GET['name'])){
     $name = $_GET['name'];
+    $user_id = $_GET['user_id'];
     
     $id = isset($_GET['id']) ? $_GET['id'] : '';
 
@@ -18,7 +19,7 @@ if(isset($_GET['name'])){
                 $todo->update($name);
                 
             }else{
-                $todo = Todo::create($name); 
+                $todo = Todo::create($name , $user_id); 
                 
             }
             $response = ['success'=> true, 'data'=>$todo];
