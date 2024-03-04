@@ -54,7 +54,7 @@ $active_users = User::selectAllActiveUsers();
         <div class="row">
             <center>
                 <div class="col-md">
-                    <h1>Welcome To TODO</h1>
+                    <h1>TODO</h1>
                     <p>A website made for an easier well planned life</p>
                 </div>
             </center>

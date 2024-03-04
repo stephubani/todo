@@ -15,7 +15,7 @@ class User {
        if(!isset($this->users_id)){
             $sql = 'INSERT INTO users(users_name , is_active) VALUES(?,?)';
             $statement = self::$dbconn->prepare($sql);
-            $response = $statement->execute([$this->users_name , $this->is_active]);
+            $response = $statement->execute([$this->users_name , (int)$this->is_active]);
             if($response){
                 $this->users_id = self::$dbconn->lastInsertId();
                 return $this->users_id;
@@ -135,7 +135,7 @@ class User {
             }
             return $allActiveUsers;
         }else{
-            return [];
+            return $active_users = [];
         }
         
     }

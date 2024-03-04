@@ -13,35 +13,41 @@ if(isset($_GET['name'])){
     
     $id = isset($_GET['id']) ? $_GET['id'] : '';
 
-    if(!empty($name )){
+    if(!empty($user_id)){
+        if(!empty($name )){
        
-        $todoNameExists =  Todo::doesTodoNameExist($name , $id);
-        
+            $todoNameExists =  Todo::doesTodoNameExist($name , $id);
+            
 
-        if(!$todoNameExists){
-            if(!empty($id)){
+            if(!$todoNameExists){
+
+                if(!empty($id)){
+                    
+                    $todo = Todo::findById($id);
+                    $todo->update($name , $user_id , $username);
+                    
+                }else{
                 
-                $todo = Todo::findById($id);
-                $todo->update($name , $user_id , $username);
-                
+                    $todo = Todo::create($name, $user_id );
+                    
+                }
+                $response = ['success'=> true, 'data'=>$todo];
+                echo json_encode($response);
+                exit();
+            
             }else{
-               
-                $todo = Todo::create($name, $user_id );
-                
+            $error = 'To-Do Name Must Be Unique';
+            
             }
-            $response = ['success'=> true, 'data'=>$todo];
-            echo json_encode($response);
-            exit();
-           
-        }else{
-           $error = 'To-Do Name Must Be Unique';
-           
-        }
-        
+            
        
+        }else{
+            $error = 'All fiels must be filled';
+        } 
     }else{
-        $error = 'All fiels must be filled';
+        $error = 'An Active User Must Be Available To Perform This Action';
     }
+  
     $response = ['success' => false , 'error' => $error];
     echo json_encode($response);
 }

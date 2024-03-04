@@ -9,7 +9,7 @@ if($active_User){
     echo json_encode($response);
     exit();
 }else{
-    $response = ['success'=> true, 'message' => 'Unable to get user at the moment'];
+    $response = ['success'=> false, 'message' => 'No user at the moment'];
     echo json_encode($response);
     exit();
 }

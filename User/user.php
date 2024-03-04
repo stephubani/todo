@@ -20,16 +20,46 @@ $allUser = User::getAllUser();
 </head>
 <body>
     <div class="container">
+            <!-- nav bar starts here -->
+        <div class="row">
+            <div class="col-md ">
+                <nav class="navbar navbar-expand-lg  bg-primary ">
+                    <div class="container">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link active redesigned" aria-current="page" href="../index.php" style="font-size: 15px;">Home</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link active redesigned" aria-current="page" href="user.php" style="font-size: 15px;">Users</a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- nav bar ends here -->
        <div class="row">
             <div class="col-md">
-                <h1>Welcome To To-Do!</h1>
-                <p>Please fill this form to register as a user</p>
+                <center>
+                    <h1>User</h1>
+                    <p>Please fill this form to register as a user</p>
                     <label for="Fullname">Full-Name
                         <input type="text" name="fullname" id="fullname" class="form-control" value=""> 
                     </label> 
                     <input type="hidden" name="user_id" id="userid" value="">
 
                     <button type="submit" class="btn btn-primary" id="user_button">Register</button>
+                </center>
+               
             </div>
        </div>
 
