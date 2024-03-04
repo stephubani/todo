@@ -64,13 +64,36 @@ $active_users = User::selectAllActiveUsers();
         <div class= 'mb-5'>
             <center>
                 <div class="row" id="edit_name">
-                    <div class="col-md">
-                        <label for="">To-do Name</label>
-                        <input type="text" name="todo_name" id="todo_name" class=" mb-3">
-                        <input type="hidden" name="todo_id" value="" id="atodo_id">
-                        <!-- <input type="hidden" name="username" value="" id='a_username'> -->
-                        <button class="btn btn-primary" id="saveButton">Add</button>
+                    <div class="todo">
+                        <div class="col-md-3">
+                            <label for="">To-do Name</label>
+                            <input type="text" name="todo_name" id="todo_name" class=" mb-3">
+                            <input type="hidden" name="todo_id" value="" id="atodo_id">
+                            <!-- <input type="hidden" name="username" value="" id='a_username'> -->
+                         
+                        </div>
+                   
+                        <div class="col-md-3 des ">
+                            
+                            <form action="">
+                                <select name="" class="form-select" id="alluser">
+                                <?php foreach($active_users as $user){ ?>
+                                    <option value="<?php echo $user->users_id?>" class="activeuser" id="users"><?php echo $user->users_name?></option>
+                                <?php } ?>
+                            
+                            </select>
+                            </form>
+                           
+                        </div>
+                        <div>
+                            <button class="btn btn-primary btn-lg" id="saveButton">Add</button>
+                        </div>
+                        
                     </div>
+                  
+                  
+
+                    
                 </div>
 
                 <div id="displayMessageContainer" class="col-md-6 ">
@@ -79,22 +102,7 @@ $active_users = User::selectAllActiveUsers();
             </center>
         </div>
 
-        <div>
-            <div class="row mb-5">
-                <div class="col-md-4">
-                    <h5>Active Users</h5>
-                    <form action="">
-                        <select name="" class="form-select" id="alluser">
-                        <?php foreach($active_users as $user){ ?>
-                            <option value="<?php echo $user->users_id?>" class="activeuser" id="users"><?php echo $user->users_name?></option>
-                        <?php } ?>
-                       
-                    </select>
-                    </form>
-                   
-                </div>
-            </div>
-        </div>
+     
 
         <div class="row">
             <div class="col-md">

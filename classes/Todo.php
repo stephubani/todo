@@ -39,11 +39,13 @@ class Todo{
         try{
             self::setDbConnection();
             $sql = 'SELECT * FROM todo WHERE name=?';
+            $params = [$name];
             if($id){
                 $sql .= ' AND id != ?';
+                $params[] = $id;
             }
             $statement =  self::$dbconn->prepare($sql);
-            $statement->execute([$name , $id]);
+            $statement->execute($params);
             $todo_name =$statement->fetchAll(PDO:: FETCH_ASSOC);
 
             return $todo_name ? true : false;

@@ -137,6 +137,8 @@ $(document).ready(function(){
       var todo_id = $('#atodo_id').val();
       var user_id = $('#alluser').val();
       var username = $('#alluser option:selected').text();
+  
+
 
      
       let data = {
@@ -145,6 +147,7 @@ $(document).ready(function(){
         username : username
 
       }
+     
       if(todo_id != '' ){
         data['id'] = todo_id
       }
@@ -209,12 +212,13 @@ $(document).ready(function(){
   
   
       $.post('process/process_get_activeuser.php', function(response) {
+        console.log(response)
         var rsp = JSON.parse(response)
         if(rsp.success == true){
-          html = `
-          <option value="${rsp.data.id}" class="activeuser">${rsp.data.name}</option>
-          `
-          $('#alluser').prepend(html)
+          rsp.data.forEach(function(user) {
+            var option = $('<option>', { value: user.users_id, class: 'activeuser', text: user.users_name });
+            $('#alluser').append(option);
+          });
         }else{
           $('#displayMessageContainer').html(rsp.message)
           setTimeout(function() {

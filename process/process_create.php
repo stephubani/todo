@@ -8,18 +8,24 @@ if(isset($_GET['name'])){
     $name = $_GET['name'];
     $user_id = $_GET['user_id'];
     $username = $_GET['username'];
+
+   
     
     $id = isset($_GET['id']) ? $_GET['id'] : '';
 
     if(!empty($name )){
+       
         $todoNameExists =  Todo::doesTodoNameExist($name , $id);
+        
 
         if(!$todoNameExists){
             if(!empty($id)){
+                
                 $todo = Todo::findById($id);
                 $todo->update($name , $user_id , $username);
                 
             }else{
+               
                 $todo = Todo::create($name, $user_id );
                 
             }
