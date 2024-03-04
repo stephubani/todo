@@ -26,7 +26,7 @@ class User {
         }else{
             $sql = 'UPDATE users SET users_name=? , is_active=? WHERE users_id=?';
             $statement = self::$dbconn->prepare($sql);
-            $response = $statement->execute([$this->users_name, $this->is_active , $this->users_id]);
+            $response = $statement->execute([$this->users_name, (int)$this->is_active , $this->users_id]);
 
             return $response ? true : false;
         }
@@ -103,7 +103,7 @@ class User {
     
     public  function update($name){
       $this->users_name = $name;
-      $this->is_active = 0;
+      $this->is_active = false;
         return $this->linkPropertiesToDatabase();
     }
 

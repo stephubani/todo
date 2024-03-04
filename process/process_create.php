@@ -7,24 +7,26 @@ require_once('../classes/Todo.php');
 if(isset($_GET['name'])){
     $name = $_GET['name'];
     $user_id = $_GET['user_id'];
+    $username = $_GET['username'];
     
     $id = isset($_GET['id']) ? $_GET['id'] : '';
 
     if(!empty($name )){
-        $todoNameExists =  Todo::doesTodoNameExist($name);
+        $todoNameExists =  Todo::doesTodoNameExist($name , $id);
 
         if(!$todoNameExists){
             if(!empty($id)){
                 $todo = Todo::findById($id);
-                $todo->update($name);
+                $todo->update($name , $user_id , $username);
                 
             }else{
-                $todo = Todo::create($name , $user_id); 
+                $todo = Todo::create($name, $user_id );
                 
             }
             $response = ['success'=> true, 'data'=>$todo];
             echo json_encode($response);
             exit();
+           
         }else{
            $error = 'To-Do Name Must Be Unique';
            

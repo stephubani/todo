@@ -68,6 +68,7 @@ $active_users = User::selectAllActiveUsers();
                         <label for="">To-do Name</label>
                         <input type="text" name="todo_name" id="todo_name" class=" mb-3">
                         <input type="hidden" name="todo_id" value="" id="atodo_id">
+                        <!-- <input type="hidden" name="username" value="" id='a_username'> -->
                         <button class="btn btn-primary" id="saveButton">Add</button>
                     </div>
                 </div>
@@ -113,7 +114,7 @@ $active_users = User::selectAllActiveUsers();
                     <tbody>
                         <?php foreach($all_todo as $todo ){ ?>
                             <tr class="new_tr" id='<?php echo $todo->id ?>'>
-                                <td><?php echo $todo->users_name?></td>
+                                <td class="username" id="<?php echo $todo->users_id?>"><?php echo $todo->users_name?></td>
                                 <td class='todo_name'><?php echo $todo->name ?></td>
                                 <td id="todo_status"><?php echo $todo->displayStatus() ?></td>
                                 <td><?php echo $todo->created_at ?></td>

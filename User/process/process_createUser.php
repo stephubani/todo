@@ -27,10 +27,10 @@ if($_POST){
 
                 }else{
                     $user_id = User::create($name);
-                    $userDetails = User::getUserById($user_id);
+                    $user = User::getUserById($user_id);
                     $success_message = 'Registration Successful';
                     
-                    $response = ['success'=> true , 'message'=> $success_message , 'data' => $userDetails];
+                    $response = ['success'=> true , 'message'=> $success_message , 'data' => $user];
                     echo json_encode($response);
                 }
                 

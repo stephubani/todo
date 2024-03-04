@@ -122,9 +122,11 @@ $(document).ready(function(){
     function editTodoName(event) {
       var todo_name = $(event.target).closest('tr').find('.todo_name').text();
       var todo_id = $(event.target).closest('tr').find('.todo_id').val();
+      // var username = $(event.target).closest('tr').find('.username').text();
       $('#atodo_id').val(todo_id);
       $('#saveButton').text('Edit')
       $('#todo_name').val(todo_name)
+      // $('#a_username').val(username)
       
     }
 
@@ -134,10 +136,13 @@ $(document).ready(function(){
       var todo_name = $('#todo_name').val()
       var todo_id = $('#atodo_id').val();
       var user_id = $('#alluser').val();
+      var username = $('#alluser option:selected').text();
+
      
       let data = {
         name : todo_name,
-        user_id : user_id
+        user_id : user_id,
+        username : username
 
       }
       if(todo_id != '' ){
@@ -154,7 +159,7 @@ $(document).ready(function(){
             html += `<tr id = ${res.data.id}>`
           }
           html += `
-            <td class="username">${res.data.users_name}</td>
+            <td class="username" id='${res.data.id}'>${res.data.users_name}</td>
             <td class='todo_name'>${res.data.name}</td>
             <td>${res.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
             <td>${res.data.created_at}</td>
@@ -181,6 +186,7 @@ $(document).ready(function(){
             $(`#${todo_id}`).html(html)
           }
           $('#todo_name').val('')
+          $('#atodo_id').val('');
           
           document.getElementById(`mark_button_${res.data.id}`).addEventListener('click',markAsCompleted)
           document.getElementById(`deleteTodo_${res.data.id}`).addEventListener('click', deleteTodo)
@@ -203,11 +209,10 @@ $(document).ready(function(){
   
   
       $.post('process/process_get_activeuser.php', function(response) {
-        console.log(response)
         var rsp = JSON.parse(response)
         if(rsp.success == true){
           html = `
-          <option value="${rsp.data[0].id}" class="activeuser">${rsp.data[0].name}</option>
+          <option value="${rsp.data.id}" class="activeuser">${rsp.data.name}</option>
           `
           $('#alluser').prepend(html)
         }else{

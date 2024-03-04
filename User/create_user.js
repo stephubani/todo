@@ -1,6 +1,8 @@
 $(document).ready(function(){
     $('#user_button').click(function(){
         var fullname =   $('#fullname').val();
+        console.log(fullname.length)
+        
         var user_id = $('#userid').val();
         let data = {
             name : fullname
@@ -69,6 +71,7 @@ $(document).ready(function(){
     function editUser(event){
 
         var userName = $(event.target).closest('tr').find('.username').text()
+        console.log(userName.length)
         var user_id = $(event.target).closest('tr').find('.user_id').val()
         $('#userid').val(user_id)
         $('#user_button').text('Edit')

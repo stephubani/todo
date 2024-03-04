@@ -35,12 +35,15 @@ class Todo{
         self::$dbconn = (new Db())->conn;
     }
 
-    public static function doesTodoNameExist($name){
+    public static function doesTodoNameExist($name , $id = null){
         try{
             self::setDbConnection();
             $sql = 'SELECT * FROM todo WHERE name=?';
+            if($id){
+                $sql .= ' AND id != ?';
+            }
             $statement =  self::$dbconn->prepare($sql);
-            $statement->execute([$name]);
+            $statement->execute([$name , $id]);
             $todo_name =$statement->fetchAll(PDO:: FETCH_ASSOC);
 
             return $todo_name ? true : false;
@@ -56,11 +59,11 @@ class Todo{
         try{
             self::setDbConnection();
             $date_format = date('Y-m-d h:i:s');
-            $sql = 'INSERT INTO todo(name, created_at , users_id) VALUES(?,?,?)';
+            $sql = 'INSERT INTO todo(name, created_at , users_id ) VALUES(?,?,?)';
             $statement = self::$dbconn->prepare($sql);
             $response=   $statement->execute([$name, $date_format , $users_id]);
             if($response){
-                return self::findById(self::$dbconn->lastInsertId()); 
+                return self::findById(self::$dbconn->lastInsertId()) ;
             }else{
                 return false;
             }
@@ -101,7 +104,7 @@ class Todo{
         $statement = self::$dbconn->prepare($sql);
         $statement->execute([$id]);
         $todo = $statement->fetch( PDO::FETCH_ASSOC);
-          
+       
         if($todo){
             $a_todo = new Todo($todo);
             $a_todo->users_name = $todo['users_name'];
@@ -111,13 +114,16 @@ class Todo{
         return null;
     }
 
-    public function update($name ){
+    public function update($name , $users_id , $username ){
         try{
             self::setDbConnection();
+            $this->name = $name;
+            $this->users_id = $users_id;
+            $this->users_name = $username;
             $date_updated = date('Y-m-d h:i:s');
-            $sql = "UPDATE todo SET name=?, updated_at=? WHERE id=?";
+            $sql = "UPDATE todo SET name=?, updated_at=? , users_id = ? WHERE id=?";
             $statement = self::$dbconn->prepare($sql);
-            $statement->execute([$name ,$date_updated, $this->id]);
+            $statement->execute([$name ,$date_updated, $users_id, $this->id]);
             return true;
 
         }catch(PDOException $e){

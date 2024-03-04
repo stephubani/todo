@@ -52,9 +52,7 @@ $allUser = User::getAllUser();
                     <tbody id ="table_body">
                         <?php foreach($allUser as $user){ ?>
                         <tr id="<?php echo $user->users_id?>">
-                            <td class="username">
-                                <?php echo $user->users_name?>
-                            </td>
+                            <td class="username"><?php echo $user->users_name?> </td>
                             <td class="is_active"> 
                                  <?php if($user->is_active == 0){
                                 ?>
