@@ -130,7 +130,6 @@ class User {
                 $an_ActiveUser->users_id = $users['users_id'];
                 $an_ActiveUser->users_name = $users['users_name'];
                 $an_ActiveUser->is_active = $users['is_active'];
-
                 $allActiveUsers[] = $an_ActiveUser;
             }
             return $allActiveUsers;
