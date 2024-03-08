@@ -23,7 +23,7 @@ $activeRole = Role::selectAllActiveRoles();
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
             <!-- nav bar starts here -->
         <div class="row">
             <div class="col-md ">
