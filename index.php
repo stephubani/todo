@@ -9,6 +9,8 @@ $active_users = User::selectAllActiveUsers();
 
 
 
+
+
 ?>
 
 
@@ -40,7 +42,11 @@ $active_users = User::selectAllActiveUsers();
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link active redesigned" aria-current="page" href="User/user.php" style="font-size: 15px;">Users</a>
+                                    <a class="nav-link active redesigned" aria-current="page" href="user.php" style="font-size: 15px;">Users</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link active redesigned" aria-current="page" href="role.php" style="font-size: 15px;">Roles</a>
                                 </li>
 
 
@@ -66,34 +72,20 @@ $active_users = User::selectAllActiveUsers();
                 <div class="row" id="edit_name">
                     <div class="todo">
                         <div class="col-md-3">
-                            <label for="">To-do Name</label>
-                            <input type="text" name="todo_name" id="todo_name" class=" mb-3">
+                            <input type="text" name="todo_name" id="todo_name" class="mb-3 form-control" placeholder="To-Do Name">
                             <input type="hidden" name="todo_id" value="" id="atodo_id">
-                            <!-- <input type="hidden" name="username" value="" id='a_username'> -->
-                         
                         </div>
                    
                         <div class="col-md-3 des ">
-                            
-                            <form action="">
-                                <select name="" class="form-select" id="alluser">
-                                <?php foreach($active_users as $user){ ?>
-                                    <option value="<?php echo $user->users_id?>" class="activeuser" id="users"><?php echo $user->users_name?></option>
-                                <?php } ?>
+                            <select name="" class="form-select" id="alluser">
                             
                             </select>
-                            </form>
-                           
                         </div>
                         <div>
-                            <button class="btn btn-primary btn-lg" id="saveButton">Add</button>
+                            <button class="btn btn-primary btn-md" id="saveButton">Add</button>
                         </div>
                         
                     </div>
-                  
-                  
-
-                    
                 </div>
 
                 <div id="displayMessageContainer" class="col-md-6 ">
@@ -122,7 +114,7 @@ $active_users = User::selectAllActiveUsers();
                     <tbody>
                         <?php foreach($all_todo as $todo ){ ?>
                             <tr class="new_tr" id='<?php echo $todo->id ?>'>
-                                <td class="username" id="<?php echo $todo->users_id?>"><?php echo $todo->users_name?></td>
+                                <td class="username" id="<?php echo $todo->users_id?>"><?php echo $todo->user?->users_name ?></td>
                                 <td class='todo_name'><?php echo $todo->name ?></td>
                                 <td id="todo_status"><?php echo $todo->displayStatus() ?></td>
                                 <td><?php echo $todo->created_at ?></td>

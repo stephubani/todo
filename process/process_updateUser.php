@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-require_once '../../classes/User.php';
+require_once '../classes/User.php';
 
 if($_POST){
     $userid = isset($_POST['user_id']) ? $_POST['user_id'] :  '';
@@ -37,5 +37,6 @@ if($_POST){
  
         
 }else{
-    echo ' hello something is wrong';
+    $response = ['success' => false ,  'message' => 'Unauthorized Visit'];
+    echo json_encode($response);
 }

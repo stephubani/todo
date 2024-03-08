@@ -1,25 +1,27 @@
 $(document).ready(function(){
     $('#user_button').click(function(){
-        var fullname =   $('#fullname').val();
-        console.log(fullname.length)
+        let fullname =   $('#fullname').val();
+        let role_id = $('#active_role').val();
         
-        var user_id = $('#userid').val();
+        let user_id = $('#userid').val();
         let data = {
-            name : fullname
+            name : fullname,
+            role_id :role_id
         }
         if(user_id != ''){
            data.user_id = user_id
         }
-        var url = 'process/process_createUser.php'
+        let url = 'process/process_createUser.php'
         $.post(url ,data , function(response){
-            console.log(response);
-            var rsp = JSON.parse(response)
+            
+            let rsp = JSON.parse(response)
             if(rsp.success == true){
                 let html = ''
                 if(user_id == ''){
                     html += `<tr id= '${rsp.data.users_id}'>`
                 }
                 html += `
+                    <td class = 'roles'>${rsp.data.role.roles_name}</td>
                     <td class='username'>${rsp.data.users_name}</td>
                     <td>
                         <button class = 'btn btn-secondary status'id='status_${rsp.data.users_id}'>
@@ -70,9 +72,9 @@ $(document).ready(function(){
 
     function editUser(event){
 
-        var userName = $(event.target).closest('tr').find('.username').text()
+        let userName = $(event.target).closest('tr').find('.username').text()
         console.log(userName.length)
-        var user_id = $(event.target).closest('tr').find('.user_id').val()
+        let user_id = $(event.target).closest('tr').find('.user_id').val()
         $('#userid').val(user_id)
         $('#user_button').text('Edit')
         $('#fullname').val(userName)
@@ -88,13 +90,14 @@ $(document).ready(function(){
     })
 
     function activateUser(event){
-        var user_id = $(event.target).closest('tr').find('.user_id').val()
-        var url = 'process/process_updateUser.php'
+        let user_id = $(event.target).closest('tr').find('.user_id').val()
+        let url = 'process/process_updateUser.php'
         $.post(url ,{user_id} , function(response){
-            var rsp = JSON.parse(response)
+            let rsp = JSON.parse(response)
             if(rsp.success == true){
                 let html = ''
                 html = `
+                    <td class = 'roles'>${rsp.data.role.roles_name}</td>
                     <td class='username'>${rsp.data.users_name}</td>
                     <td>
                         <button class = 'btn btn-secondary status' id='status_${rsp.data.users_id}'>

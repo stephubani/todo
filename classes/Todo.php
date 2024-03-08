@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Db.php';
+require_once 'User.php';
 
 
 
@@ -13,7 +14,8 @@ class Todo{
     public $updated_at;
     public $completed_at;
     public $users_id ;
-    public $users_name;
+
+    public $user ;
 
     private static $dbconn;
 
@@ -26,7 +28,7 @@ class Todo{
         $this->updated_at = $data['updated_at'] ?? null;
         $this->completed_at = $data['completed_at'] ?? null;
         $this->users_id = $data['users_id']?? null ; 
-        $this->users_name = $data['users_name']?? null ;
+       
         
       
     }
@@ -79,7 +81,7 @@ class Todo{
 
     public static function findAll(){
         self::setDbConnection();
-        $sql = 'SELECT * FROM todo INNER JOIN users ON todo.users_id = users.users_id ORDER BY todo.id DESC';
+        $sql = 'SELECT * FROM todo ORDER BY id DESC';
         $statement = self::$dbconn->prepare($sql);
         $statement->execute();
         $all_todo =$statement->fetchAll(PDO::FETCH_ASSOC);
@@ -90,7 +92,7 @@ class Todo{
             foreach($all_todo as $todo){
                 
                 $a_todo = new Todo($todo);
-                $a_todo->users_name = $todo['users_name'];
+                $a_todo->user = User::getUserById($todo['users_id']);
                 $todos[] = $a_todo;
             
             }
@@ -102,38 +104,32 @@ class Todo{
 
     public static function findById($id){
         self::setDbConnection();
-        $sql = 'SELECT * FROM todo INNER JOIN users ON todo.users_id = users.users_id WHERE id = ?';
+        $sql = 'SELECT * FROM todo  WHERE id = ?';
         $statement = self::$dbconn->prepare($sql);
         $statement->execute([$id]);
         $todo = $statement->fetch( PDO::FETCH_ASSOC);
        
         if($todo){
             $a_todo = new Todo($todo);
-            $a_todo->users_name = $todo['users_name'];
+            $a_todo->user = User::getUserById($todo['users_id']);
           
-             return $a_todo;
+            return $a_todo;
         }
         return null;
     }
 
-    public function update($name , $users_id , $username ){
-        try{
-            self::setDbConnection();
-            $this->name = $name;
-            $this->users_id = $users_id;
-            $this->users_name = $username;
-            $date_updated = date('Y-m-d h:i:s');
-            $sql = "UPDATE todo SET name=?, updated_at=? , users_id = ? WHERE id=?";
-            $statement = self::$dbconn->prepare($sql);
-            $statement->execute([$name ,$date_updated, $users_id, $this->id]);
-            return true;
+    public function update($name , $users_id ){
+        
+        self::setDbConnection();
+        $this->name = $name;
+        $this->users_id = $users_id;
+        $this->updated_at = date('Y-m-d h:i:s');
+        $sql = "UPDATE todo SET name=?, updated_at=? , users_id = ? WHERE id=?";
+        $statement = self::$dbconn->prepare($sql);
+        $statement->execute([$this->name ,$this->updated_at, $this->users_id, $this->id]);
+        $this->user = User::getUserById($this->users_id);
 
-        }catch(PDOException $e){
-           $_SESSION['error_message']= "To do already exists";
-           return false;
-        }
-       
-       
+        return ;
     }
 
     public function markAsCompleted(){

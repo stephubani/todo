@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 require_once "Db.php";
+require_once 'Role.php';
 
 
 
@@ -8,14 +9,17 @@ class User {
     public  int $users_id;
     public  string $users_name;
     public  bool $is_active;
+    public $roles_id;
+
+    public $role;
 
     public static $dbconn;
 
     public  function linkPropertiesToDatabase(){
        if(!isset($this->users_id)){
-            $sql = 'INSERT INTO users(users_name , is_active) VALUES(?,?)';
+            $sql = 'INSERT INTO users(users_name , is_active , roles_id) VALUES(?,? ,?)';
             $statement = self::$dbconn->prepare($sql);
-            $response = $statement->execute([$this->users_name , (int)$this->is_active]);
+            $response = $statement->execute([$this->users_name , (int)$this->is_active , $this->roles_id]);
             if($response){
                 $this->users_id = self::$dbconn->lastInsertId();
                 return $this->users_id;
@@ -24,9 +28,9 @@ class User {
                 return false;
             }
         }else{
-            $sql = 'UPDATE users SET users_name=? , is_active=? WHERE users_id=?';
+            $sql = 'UPDATE users SET users_name=? , is_active=? , roles_id=?  WHERE users_id=?';
             $statement = self::$dbconn->prepare($sql);
-            $response = $statement->execute([$this->users_name, (int)$this->is_active , $this->users_id]);
+            $response = $statement->execute([$this->users_name, (int)$this->is_active , $this->roles_id, $this->users_id  ]);
 
             return $response ? true : false;
         }
@@ -36,20 +40,26 @@ class User {
         self::$dbconn = (new Db())->conn;
     }
 
-    public static function checkIfUserExists($name){
+    public static function checkIfUserExists($name , $id = null){
         self::connectDatabase();
         $sql = 'SELECT * FROM users WHERE users_name =?';
+        $params = [$name];
+        if($id){
+            $sql .= ' AND users_id != ?';
+            $params[] = $id;
+        }
         $statement= self::$dbconn->prepare($sql);
-        $statement->execute([$name]);
+        $statement->execute($params);
         $user_name = $statement->fetch(PDO::FETCH_ASSOC);
         
         return $user_name ? $user_name : false;
     }
 
-    public static function create($name){
+    public static function create($name , $role_id){
         $user = new User();
         $user->users_name = $name;
         $user->is_active = 0;
+        $user->roles_id = $role_id;
         self::connectDatabase();
         return $user->linkPropertiesToDatabase();
     }
@@ -69,6 +79,8 @@ class User {
             $user->users_id = $a_user[0]['users_id'];
             $user->users_name = $a_user[0]['users_name'];
             $user->is_active = $a_user[0]['is_active'];
+            $user->roles_id = $a_user[0]['roles_id'];
+            $user->role = Role::getRolesById($a_user[0]['roles_id']);
 
             return $user;
 
@@ -91,6 +103,8 @@ class User {
                 $a_user->users_id = $user['users_id'];
                 $a_user->users_name = $user['users_name'];
                 $a_user->is_active = $user['is_active'];
+                $a_user->roles_id = $user['roles_id'];
+                $a_user->role = Role::getRolesById($user['roles_id']);
                 $users[] = $a_user;
             }
             return $users;
@@ -101,9 +115,11 @@ class User {
 
     }
     
-    public  function update($name){
+    public  function update($name , $roles_id){
       $this->users_name = $name;
       $this->is_active = false;
+      $this->roles_id = $roles_id;
+      $this->role = Role::getRolesById($this->roles_id);
         return $this->linkPropertiesToDatabase();
     }
 
@@ -141,5 +157,5 @@ class User {
 
     public function displayStatusOfUser(){
         return $this->is_active == 0 ? 'Unactive' : 'Active';
-    }
+    }   
 }

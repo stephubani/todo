@@ -1,41 +1,5 @@
 $(document).ready(function(){
 
-    $('#addTodo').click(function(){
-      var todo_name = $('#todo_name').val();
-      $.post('process/process_create.php',{name : todo_name}, function(response){
-          var newTodo = JSON.parse(response)
-          todo_id = newTodo.id;
-          var newTodoRow = `
-          <tr id='${newTodo.id}'>
-            <td class="username">${newTodo.users_name}</td>
-            <td class='todo_name'>${newTodo.name}</td>
-            <td>${newTodo.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
-            <td>${newTodo.created_at}</td>
-            <td>${newTodo.completed_at == null ? '' : newTodo.completed_at}</td>
-            <td>
-              ${newTodo.is_completed == 0 ? ` <input type="hidden" class="todo_id" name="" value="${newTodo.id}">
-              <button class="btn btn-primary mark_btn" id='mark_button_${newTodo.id}'>Mark as Completed</button>`: ''}
-
-              ${newTodo.is_completed == 0 ? `
-              <button class='btn btn-primary'id='editTodo_${newTodo.id}'>
-                <i class="fa-solid fa-pen"></i>
-              </button>`: ' '}
-              
-              <button class="btn delete_btn" id='deleteTodo_${newTodo.id}'><i class="fa fa-trash text-danger"></i></button>
-            </td>
-          </tr>
-          ` 
-          $('tbody').prepend(newTodoRow);
-          $('#todo_name').val('');
-
-           document.getElementById(`mark_button_${newTodo.id}`).addEventListener('click',markAsCompleted)
-           document.getElementById(`deleteTodo_${newTodo.id}`).addEventListener('click', deleteTodo)
-           document.getElementById(`editTodo_${newTodo.id}`).addEventListener('click', editTodoName)
-
-           
-      })
-    })
-
      $('.mark_btn').click(function(event){
        markAsCompleted(event);
 
@@ -48,13 +12,13 @@ $(document).ready(function(){
 
    
     function markAsCompleted(event){
-      var todo_id =  $(event.target).closest('tr').find('.todo_id').val()
+      let todo_id =  $(event.target).closest('tr').find('.todo_id').val()
       $.get('process/process_update.php', {id: todo_id}, function(response){
          
-        var rsp = JSON.parse(response)
+        let rsp = JSON.parse(response)
        
         if(rsp.success == true){
-          var updateTodoRow = `
+          let updateTodoRow = `
           <td class="username">${rsp.data.users_name}</td>
           <td>${rsp.data.name}</td>
           <td>${rsp.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
@@ -98,9 +62,9 @@ $(document).ready(function(){
     })
     
     function deleteTodo(event){
-      var response = confirm("Do you really want to delete this todo");
+      let response = confirm("Do you really want to delete this todo");
       if(response == true){
-        var todo_id = $(event.target).closest('tr').find('.todo_id').val();
+        let todo_id = $(event.target).closest('tr').find('.todo_id').val();
 
         $.get('process/process_delete.php', {id:todo_id}, function(response){
           rsp = JSON.parse(response)
@@ -120,9 +84,9 @@ $(document).ready(function(){
     }
 
     function editTodoName(event) {
-      var todo_name = $(event.target).closest('tr').find('.todo_name').text();
-      var todo_id = $(event.target).closest('tr').find('.todo_id').val();
-      // var username = $(event.target).closest('tr').find('.username').text();
+      let todo_name = $(event.target).closest('tr').find('.todo_name').text();
+      let todo_id = $(event.target).closest('tr').find('.todo_id').val();
+      // let username = $(event.target).closest('tr').find('.username').text();
       $('#atodo_id').val(todo_id);
       $('#saveButton').text('Edit')
       $('#todo_name').val(todo_name)
@@ -133,10 +97,10 @@ $(document).ready(function(){
    
 
     $('#saveButton').click(function(event) {
-      var todo_name = $('#todo_name').val()
-      var todo_id = $('#atodo_id').val();
-      var user_id = $('#alluser').val();
-      var username = $('#alluser option:selected').text();
+      let todo_name = $('#todo_name').val()
+      let todo_id = $('#atodo_id').val();
+      let user_id = $('#alluser').val();
+      let username = $('#alluser option:selected').text();
   
 
 
@@ -152,7 +116,6 @@ $(document).ready(function(){
         data['id'] = todo_id
       }
       $.get('process/process_create.php', data , function(response){
-        console.log(response)
         const res = JSON.parse(response)
         
         if(res.success){
@@ -213,10 +176,11 @@ $(document).ready(function(){
   
       $.post('process/process_get_activeuser.php', function(response) {
         console.log(response)
-        var rsp = JSON.parse(response)
+        let rsp = JSON.parse(response)
         if(rsp.success == true){
+          $('#alluser').append('<option>Select A User</option>')
           rsp.data.forEach(function(user) {
-            var option = $('<option>', { value: user.users_id, class: 'activeuser', text: user.users_name });
+            let option = $('<option>', { value: user.users_id, class: 'activeuser', text: user.users_name });
             $('#alluser').append(option);
           });
         }else{
