@@ -7,10 +7,6 @@ $all_todo = Todo::findAll();
 $active_users = User::selectAllActiveUsers();
 
 
-
-
-
-
 ?>
 
 

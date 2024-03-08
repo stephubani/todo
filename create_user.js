@@ -97,7 +97,7 @@ $(document).ready(function(){
             if(rsp.success == true){
                 let html = ''
                 html = `
-                    <td class = 'roles'>${rsp.data.role.roles_name}</td>
+                    <td class = 'roles'>${rsp.data.role != null ? rsp.data.role.roles_name : ''}</td>
                     <td class='username'>${rsp.data.users_name}</td>
                     <td>
                         <button class = 'btn btn-secondary status' id='status_${rsp.data.users_id}'>
