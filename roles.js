@@ -102,7 +102,6 @@ $(document).ready(function(){
             let role_id = $(event.target).closest('tr').find('.rolesid').val()
 
             $.post('process/process_deleteRole.php' , {role_id} , function(response){
-                console.log(response)
                 rsp = JSON.parse(response)
 
                 if(rsp.success == true){

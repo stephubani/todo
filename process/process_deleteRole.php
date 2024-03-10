@@ -12,7 +12,7 @@ if(isset($_POST['role_id']))
     $reponse = $role->delete();
 
     if($reponse){
-        $success_message = 'Todo Deleted Successfully' ;
+        $success_message = 'Role Deleted Successfully' ;
         $response = ['success' => true , 'data' => $success_message];
         echo json_encode($response);
         exit();

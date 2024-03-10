@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 require_once '../classes/Role.php';
 
-if($_POST)
+if(!empty($_POST['roles_name']))
 {
     $roles_name = $_POST['roles_name'];
     $roles_id = isset($_POST['roles_id']) ? $_POST['roles_id'] : '' ;
@@ -35,4 +35,7 @@ if($_POST)
         echo json_encode($response);
     }
     
+}else{
+    $response = ['success'=> false , 'message'=> ' A Role Name is Required To Continue......' ];
+    echo json_encode($response);
 }

@@ -5,56 +5,12 @@ require_once 'classes/User.php';
 
 $all_todo = Todo::findAll();
 $active_users = User::selectAllActiveUsers();
-
-
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/style.css">
-    <link href='assets/fa/css/all.min.css' rel='stylesheet'>
-    <title>Document</title>
-</head>
-<body>
-    <div class="container-fluid">
-         <!-- nav bar starts here -->
+<?php require_once 'partials/head.php'?>
+        <?php require_once 'partials/nav.php'; ?>
         <div class="row">
-            <div class="col-md ">
-                <nav class="navbar navbar-expand-lg  bg-primary ">
-                    <div class="container">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link active redesigned" aria-current="page" href="index.php" style="font-size: 15px;">Home</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link active redesigned" aria-current="page" href="user.php" style="font-size: 15px;">Users</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link active redesigned" aria-current="page" href="role.php" style="font-size: 15px;">Roles</a>
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- nav bar ends here -->
-        <div class="row">
-            <center>
+            <center> 
                 <div class="col-md">
                     <h1>TODO</h1>
                     <p>A website made for an easier well planned life</p>
@@ -141,8 +97,4 @@ $active_users = User::selectAllActiveUsers();
             </div>
 
         </div>
-    </div>
-<script src="jquery.min.js"></script>
-<script src="index.js"></script>  
-</body>
-</html>
+<?php require_once 'partials/footer.php'?>

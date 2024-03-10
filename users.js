@@ -34,6 +34,11 @@ $(document).ready(function(){
                             <input type="hidden" class="user_id" value="${rsp.data.users_id}">
                             <i class="fa-solid fa-pen"></i>
                         </button>
+
+                        <button class='btn btn-primary  delete_btn' id='deleteUser_${rsp.data.users_id}'>
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+
                     </td>
                 `
                 if(user_id == ''){
@@ -56,6 +61,7 @@ $(document).ready(function(){
 
                 document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
                 document.getElementById(`status_${rsp.data.users_id}`).addEventListener('click', activateUser)
+                document.getElementById(`deleteUser_${rsp.data.users_id}`).addEventListener('click', deleteUser)
                
             }else{
                 $('.feedback').html(rsp.message)
@@ -110,6 +116,11 @@ $(document).ready(function(){
                             <input type="hidden" class="user_id" value="${rsp.data.users_id}">
                             <i class="fa-solid fa-pen"></i>
                         </button>
+
+                        <button class='btn btn-danger  delete_btn' id='deleteUser_${rsp.data.users_id}'>
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+
                     </td>
                 `
                 $(`#${user_id}`).html(html)
@@ -121,9 +132,42 @@ $(document).ready(function(){
 
                 document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
                 document.getElementById(`status_${rsp.data.users_id}`).addEventListener('click', activateUser)
+                document.getElementById(`deleteUser_${rsp.data.users_id}`).addEventListener('click', deleteUser)
                
                
             }
         })   
+    }
+
+
+    $('.delete_btn').click(function(event){
+        deleteUser(event)
+    })
+    function deleteUser(event){
+        let confirmation = confirm('Delete User')
+        if(confirmation == true ){
+            let user_id = $(event.target).closest('tr').find('.user_id').val()
+
+            $.post('process/process_deleteUser.php' , {user_id}, function(response){
+                rsp = JSON.parse(response)
+
+                if(rsp.success == true){
+                    $(`#${user_id}`).remove();
+
+                    $('.feedback').html(rsp.message)
+                    setTimeout(function(){
+                        $('.feedback').html('')
+                    } , 3000)
+                    $('#fullname').val()
+                }else{
+                    $('.feedback').html(rsp.message)
+                    setTimeout(function(){
+                        $('.feedback').html('')
+                    } , 3000)
+                    $('#fullname').val()
+                }
+            }) 
+        }
+       
     }
 })

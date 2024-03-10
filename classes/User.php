@@ -155,6 +155,15 @@ class User {
         
     }
 
+    public function deleteUser(){
+        self::connectDatabase();
+        $sql = 'DELETE  FROM users WHERE users_id=?';
+        $statement = self::$dbconn->prepare($sql);
+        $response = $statement->execute([$this->users_id]);
+
+        return $response ? true : false ;
+    }
+
     public function displayStatusOfUser(){
         return $this->is_active == 0 ? 'Unactive' : 'Active';
     }   
