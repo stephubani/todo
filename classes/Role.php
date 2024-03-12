@@ -132,7 +132,7 @@ class Role
 
     }
 
-    public function displayStatusOfUser(){
+    public function displayStatusOfRoles(){
         return $this->roles_isActive == 0 ? 'Unactive' : 'Active';
     }
 

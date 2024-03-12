@@ -6,8 +6,7 @@ if($_POST){
     $userid = isset($_POST['user_id']) ? $_POST['user_id'] :  '';
     $name = $_POST['name'];
     $role_id = $_POST['role_id'];
-
-        if(!empty($name)){
+        if(!empty($name)&& !empty($role_id)){
             $userExist = User::checkIfUserExists($name , $userid);
             if(!$userExist){
                 if(!empty($userid)){
@@ -43,7 +42,7 @@ if($_POST){
                 echo json_encode($response);
             }
         }else{
-            $error_message = 'A Username is Required To Continue....';
+            $error_message = 'All Fields Are Required';
                     
             $response = ['success'=> false , 'message'=> $error_message ];
             echo json_encode($response);

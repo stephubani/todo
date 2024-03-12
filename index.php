@@ -49,7 +49,7 @@ $active_users = User::selectAllActiveUsers();
      
 
         <div class="row">
-            <div class="col-md">
+            <div class="col-md">  
                 <table class="table table-striped">
                     <thead>
                         <tr>

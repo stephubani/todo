@@ -24,9 +24,9 @@ $activeRole = Role::selectAllActiveRoles();
             </div>
             <div class="col-auto">
                 <select name="" id="active_role" class="form-select">
-                    <option value="">Select A Role</option>
+                    <option value="" selected>Select A Role</option>
                     <?php  foreach($activeRole as $role){?>
-                        <option value="<?php echo $role->roles_id?>"><?php echo $role->roles_name?></option>
+                        <option id="activerole" value="<?php echo $role->roles_id?>"><?php echo $role->roles_name?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -57,21 +57,15 @@ $activeRole = Role::selectAllActiveRoles();
                     <tbody id ="table_body">
                         <?php foreach($allUser as $user){ ?>
                         <tr id="<?php echo $user->users_id?>">
-                            <td class="roles"><?php echo $user->role?->roles_name?></td>
+                            <td class="roles" ><?php echo $user->role?->roles_name?></td>
                             <td class="username"><?php echo $user->users_name?> </td>
                             <td class="is_active"> 
-                                 <?php if($user->is_active == 0){
-                                ?>
-                                    <button class="btn btn-secondary status" id="status_<?php echo $user->users_id?>">
-                                        <?php echo $user->displayStatusOfUser()?>
-                                    </button>
-                                <?php
-                                   }else{
-                                    echo "<button class='btn btn-primary status' id='status_" . $user->users_id . "'>";
-                                    echo $user->displayStatusOfUser();
-                                    echo "</button>";
-                                }                                
-                                ?>
+                            
+                                <button class="btn <?php  echo $user->is_active == 0 ? ' btn-secondary ' : "btn-primary "?>status" id="status_<?php echo $user->users_id?>">
+                                    <input type="hidden" class="roles_id" name="role" value="<?php echo $user->role?->roles_id?>">
+                                    <?php echo $user->displayStatusOfUser()?>
+                                </button>
+                              
 
                               
                             </td>

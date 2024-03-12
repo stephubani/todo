@@ -33,6 +33,7 @@ $roles = Role::getAllRoles();
                     <thead>
                         <tr>
                             <th>Roles</th>
+                            <th>Status</th>
                             <th>Edit</th>
                         </tr>
                         
@@ -43,19 +44,9 @@ $roles = Role::getAllRoles();
                             <tr class="role" id="<?php echo $role->roles_id?>">
                                 <td class="rolesname"><?php echo $role->roles_name?></td>
                                 <td class="is_active"> 
-                                    <?php if($role->roles_isActive == 0){
-                                    ?>
-                                        <button class="btn btn-secondary status" id="status_<?php echo $role->roles_id?>">
-                                            <?php echo $role->displayStatusOfUser()?>
-                                        </button>
-                                    <?php
-                                    }else{
-                                        echo "<button class='btn btn-primary status' id='status_" . $role->roles_id. "'>";
-                                        echo $role->displayStatusOfUser();
-                                        echo "</button>";
-                                    }                                
-                                    ?>
-                              
+                                    <button class="btn <?php echo $role->roles_isActive == 0 ? "btn-secondary" : "btn-primary" ?>  status" id="status_<?php echo $role->roles_id?>">
+                                        <?php echo $role->displayStatusOfRoles()?>
+                                    </button>
                                 </td>
                                 <td>
                                     <button class='btn btn-primary edit_btn' id='editRole_<?php echo $role->roles_id ?>'>

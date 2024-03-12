@@ -2,6 +2,8 @@ $(document).ready(function(){
     $('#user_button').click(function(){
         let fullname =   $('#fullname').val();
         let role_id = $('#active_role').val();
+
+        
         
         let user_id = $('#userid').val();
         let data = {
@@ -13,7 +15,7 @@ $(document).ready(function(){
         }
         let url = 'process/process_createUser.php'
         $.post(url ,data , function(response){
-            
+            console.log(response)
             let rsp = JSON.parse(response)
             if(rsp.success == true){
                 let html = ''
@@ -58,6 +60,8 @@ $(document).ready(function(){
 
                 $('#fullname').val('')
                 $('#user_button').text('Register')
+                $('#active_role option:selected').text('Select A Role');
+                
 
                 document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
                 document.getElementById(`status_${rsp.data.users_id}`).addEventListener('click', activateUser)
@@ -69,6 +73,7 @@ $(document).ready(function(){
                     $('.feedback').html('')
                 } , 3000)
                 $('#fullname').val()
+                $('#active_role option:selected').text();
                
             }
 
@@ -79,11 +84,16 @@ $(document).ready(function(){
     function editUser(event){
 
         let userName = $(event.target).closest('tr').find('.username').text()
-        console.log(userName.length)
+        let rolesname = $(event.target).closest('tr').find('.roles').text()
+        let roles_id = $(event.target).closest('tr').find('.roles_id').val()
         let user_id = $(event.target).closest('tr').find('.user_id').val()
         $('#userid').val(user_id)
         $('#user_button').text('Edit')
         $('#fullname').val(userName)
+        $('#active_role option:selected').text(rolesname);
+        $('#active_role option:selected').val(roles_id);
+       
+        
     }
     
 
