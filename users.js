@@ -15,7 +15,6 @@ $(document).ready(function(){
         }
         let url = 'process/process_createUser.php'
         $.post(url ,data , function(response){
-            console.log(response)
             let rsp = JSON.parse(response)
             if(rsp.success == true){
                 let html = ''
@@ -60,7 +59,10 @@ $(document).ready(function(){
 
                 $('#fullname').val('')
                 $('#user_button').text('Register')
-                $('#active_role option:selected').text('Select A Role');
+                
+              
+                let selectedDropdown = $('#selectrole').val();
+                $('#active_role').val(selectedDropdown);
                 
 
                 document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
@@ -84,14 +86,14 @@ $(document).ready(function(){
     function editUser(event){
 
         let userName = $(event.target).closest('tr').find('.username').text()
-        let rolesname = $(event.target).closest('tr').find('.roles').text()
         let roles_id = $(event.target).closest('tr').find('.roles_id').val()
         let user_id = $(event.target).closest('tr').find('.user_id').val()
         $('#userid').val(user_id)
         $('#user_button').text('Edit')
         $('#fullname').val(userName)
-        $('#active_role option:selected').text(rolesname);
-        $('#active_role option:selected').val(roles_id);
+        // $('#active_role').val(rolesname);
+        $('#active_role').val(roles_id);
+
        
         
     }
