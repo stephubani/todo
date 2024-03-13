@@ -60,9 +60,7 @@ $(document).ready(function(){
                 $('#fullname').val('')
                 $('#user_button').text('Register')
                 
-              
-                let selectedDropdown = $('#selectrole').val();
-                $('#active_role').val(selectedDropdown);
+                $('#active_role').val('');
                 
 
                 document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
@@ -91,7 +89,6 @@ $(document).ready(function(){
         $('#userid').val(user_id)
         $('#user_button').text('Edit')
         $('#fullname').val(userName)
-        // $('#active_role').val(rolesname);
         $('#active_role').val(roles_id);
 
        

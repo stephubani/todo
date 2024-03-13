@@ -24,9 +24,9 @@ $activeRole = Role::selectAllActiveRoles();
             </div>
             <div class="col-auto">
                 <select name="" id="active_role" class="form-select">
-                    <option id = 'selectrole' value="" >Select A Role</option>
+                    <option  value="" >Select A Role</option>
                     <?php  foreach($activeRole as $role){?>
-                        <option id="activerole" value="<?php echo $role->roles_id?>"><?php echo $role->roles_name?></option>
+                        <option value="<?php echo $role->roles_id?>"><?php echo $role->roles_name?></option>
                     <?php } ?>
                 </select>
             </div>
