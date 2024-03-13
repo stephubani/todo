@@ -15,6 +15,7 @@ $(document).ready(function(){
         }
         let url = 'process/process_createUser.php'
         $.post(url ,data , function(response){
+            console.log(response)
             let rsp = JSON.parse(response)
             if(rsp.success == true){
                 let html = ''
@@ -27,6 +28,7 @@ $(document).ready(function(){
                     <td>
                         <button class = 'btn btn-secondary status'id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}
+                            <input type="hidden" class="roles_id" name="role" value="${rsp.data.role.roles_id}">
                         </button>
                         
                     </td>
@@ -73,7 +75,6 @@ $(document).ready(function(){
                     $('.feedback').html('')
                 } , 3000)
                 $('#fullname').val()
-                $('#active_role option:selected').text();
                
             }
 
@@ -117,6 +118,7 @@ $(document).ready(function(){
                     <td>
                         <button class = 'btn btn-secondary status' id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}
+                            <input type="hidden" class="roles_id" name="role" value="${rsp.data.role.roles_id}">
                         </button>
                         
                     </td>
