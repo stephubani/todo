@@ -7,15 +7,12 @@ require_once('../classes/Todo.php');
 if(isset($_GET['name'])){
     $name = $_GET['name'];
     $user_id = $_GET['user_id'];
-        
+    
     $id = isset($_GET['id']) ? $_GET['id'] : '';
 
-    if(empty($user_id)){
-        $error = 'An Active User Must Be Available To Perform This Action';
-    }else{
-        if(empty($name)){
+        if(empty($name) || empty($user_id)){
             
-            $error = 'All fiels must be filled';
+            $error = 'All fields must be filled';
         }else{
             $todoNameExists =  Todo::doesTodoNameExist($name , $id);
             
@@ -41,7 +38,7 @@ if(isset($_GET['name'])){
             
        
         }
-    }
+    
   
     $response = ['success' => false , 'error' => $error];
     echo json_encode($response);

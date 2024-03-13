@@ -118,7 +118,6 @@ $(document).ready(function(){
         data['id'] = todo_id
       }
       $.get('process/process_create.php', data , function(response){
-        console.log(response)
         const res = JSON.parse(response)
         
         if(res.success){
@@ -180,7 +179,6 @@ $(document).ready(function(){
   
   
       $.post('process/process_get_activeuser.php', function(response) {
-        console.log(response)
         let rsp = JSON.parse(response)
         if(rsp.success == true){
           $('#alluser').append('<option value= "">Select A User</option>')
