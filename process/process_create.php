@@ -7,13 +7,13 @@ require_once('../classes/Todo.php');
 if(isset($_GET['name'])){
     $name = $_GET['name'];
     $user_id = $_GET['user_id'];
-    
+        
     $id = isset($_GET['id']) ? $_GET['id'] : '';
 
     if(empty($user_id)){
         $error = 'An Active User Must Be Available To Perform This Action';
     }else{
-        if(empty($name )){
+        if(empty($name)){
             
             $error = 'All fiels must be filled';
         }else{

@@ -19,7 +19,7 @@ $(document).ready(function(){
        
         if(rsp.success == true){
           let updateTodoRow = `
-          <td class="username">${rsp.data.users_name}</td>
+          <td class="username">${rsp.data.user.users_name}</td>
           <td>${rsp.data.name}</td>
           <td>${rsp.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
           <td>${rsp.data.created_at}</td>
@@ -28,6 +28,7 @@ $(document).ready(function(){
             <input type='hidden' value= '${rsp.data.id}' class='todo_id'>
             <button class="btn delete_btn" id = 'deleteTodo_${rsp.data.id}'><i class="fa fa-trash text-danger">
             </i>
+            <input type="hidden" class="users_id" name="" value="${rsp.data.user.users_id}
             </button>
           </td>
           `
@@ -86,11 +87,12 @@ $(document).ready(function(){
     function editTodoName(event) {
       let todo_name = $(event.target).closest('tr').find('.todo_name').text();
       let todo_id = $(event.target).closest('tr').find('.todo_id').val();
-      // let username = $(event.target).closest('tr').find('.username').text();
+      let users_id = $(event.target).closest('tr').find('.users_id').val();
       $('#atodo_id').val(todo_id);
       $('#saveButton').text('Edit')
       $('#todo_name').val(todo_name)
-      // $('#a_username').val(username)
+      $('#alluser').val(users_id);
+    
       
     }
 
@@ -100,7 +102,7 @@ $(document).ready(function(){
       let todo_name = $('#todo_name').val()
       let todo_id = $('#atodo_id').val();
       let user_id = $('#alluser').val();
-      let username = $('#alluser option:selected').text();
+      let username = $('#alluser').val();
   
 
 
@@ -116,6 +118,7 @@ $(document).ready(function(){
         data['id'] = todo_id
       }
       $.get('process/process_create.php', data , function(response){
+        console.log(response)
         const res = JSON.parse(response)
         
         if(res.success){
@@ -125,7 +128,7 @@ $(document).ready(function(){
             html += `<tr id = ${res.data.id}>`
           }
           html += `
-            <td class="username" id='${res.data.id}'>${res.data.users_name}</td>
+            <td class="username" id='${res.data.user.users_id}'>${res.data.user.users_name}</td>
             <td class='todo_name'>${res.data.name}</td>
             <td>${res.data.is_completed == 1 ? 'Completed' : 'Not Completed'}</td>
             <td>${res.data.created_at}</td>
@@ -140,6 +143,7 @@ $(document).ready(function(){
               </button>`: ' '}
               
               <button class="btn delete_btn" id='deleteTodo_${res.data.id}'><i class="fa fa-trash text-danger"></i></button>
+              <input type="hidden" class="users_id" name="" value="${res.data.user.users_id}"
             </td>
           `
           if(todo_id == ''){
@@ -153,6 +157,7 @@ $(document).ready(function(){
           }
           $('#todo_name').val('')
           $('#atodo_id').val('');
+          $('#alluser').val('');
           
           document.getElementById(`mark_button_${res.data.id}`).addEventListener('click',markAsCompleted)
           document.getElementById(`deleteTodo_${res.data.id}`).addEventListener('click', deleteTodo)
@@ -178,9 +183,9 @@ $(document).ready(function(){
         console.log(response)
         let rsp = JSON.parse(response)
         if(rsp.success == true){
-          $('#alluser').append('<option>Select A User</option>')
+          $('#alluser').append('<option value= "">Select A User</option>')
           rsp.data.forEach(function(user) {
-            let option = $('<option>', { value: user.users_id, class: 'activeuser', text: user.users_name });
+            let option = $('<option>', { value: user.users_id, text: user.users_name });
             $('#alluser').append(option);
           });
         }else{

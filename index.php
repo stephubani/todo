@@ -73,7 +73,7 @@ $active_users = User::selectAllActiveUsers();
                                 <td><?php echo $todo->completed_at ?></td>
                                 <td>
                                     <?php if($todo->is_completed == 0){ ?>
-                                            <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>">
+                                            <!-- <input type="hidden" class="todo_id" name="" value="<?php echo $todo->id ?>"> -->
                                             <button class="btn btn-primary mark_btn">Mark as Completed</button>
                                     <?php } ?>
 
@@ -83,6 +83,7 @@ $active_users = User::selectAllActiveUsers();
                                         </button>
                                     <?php } ?>
                                         <input type='hidden' value= '<?php echo $todo->id?>' class='todo_id'>
+                                        <input type="hidden" class="users_id" name="" value="<?php echo $todo->user->users_id?>">
                                         <button class="btn delete_btn" id = 'deleteTodo_<?php echo $todo->id?>'><i class="fa fa-trash text-danger">
                                         </i>
                                         </button>
