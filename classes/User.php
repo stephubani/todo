@@ -8,6 +8,8 @@ require_once 'Role.php';
 class User {
     public  int $users_id;
     public  string $users_name;
+    public $users_email;
+    public $users_password;
     public  bool $is_active;
     public $roles_id;
 
@@ -17,9 +19,9 @@ class User {
 
     public  function linkPropertiesToDatabase(){
        if(!isset($this->users_id)){
-            $sql = 'INSERT INTO users(users_name , is_active , roles_id) VALUES(?,? ,?)';
+            $sql = 'INSERT INTO users(users_name , is_active , roles_id , users_email) VALUES(?,?,?,?)';
             $statement = self::$dbconn->prepare($sql);
-            $response = $statement->execute([$this->users_name , (int)$this->is_active , $this->roles_id]);
+            $response = $statement->execute([$this->users_name , (int)$this->is_active , $this->roles_id , $this->users_email]);
             if($response){
                 $this->users_id = self::$dbconn->lastInsertId();
                 return $this->users_id;
@@ -28,9 +30,9 @@ class User {
                 return false;
             }
         }else{
-            $sql = 'UPDATE users SET users_name=? , is_active=? , roles_id=?  WHERE users_id=?';
+            $sql = 'UPDATE users SET users_name=? , is_active=? , roles_id=? , users_email=? WHERE users_id=?';
             $statement = self::$dbconn->prepare($sql);
-            $response = $statement->execute([$this->users_name, (int)$this->is_active , $this->roles_id, $this->users_id  ]);
+            $response = $statement->execute([$this->users_name, (int)$this->is_active , $this->roles_id, $this->users_email, $this->users_id  ]);
 
             return $response ? true : false;
         }
@@ -38,6 +40,29 @@ class User {
 
     private static function connectDatabase(){
         self::$dbconn = (new Db())->conn;
+    }
+
+    public  static function Login($users_email){
+        self::connectDatabase();
+        $sql = 'SELECT * FROM users WHERE users_email=?';
+        $statement = self::$dbconn->prepare($sql);
+        $statement->execute([$users_email ]);    
+        $a_user = $statement->fetchAll(PDO::FETCH_ASSOC);
+       
+            if($a_user){
+                $user = new User();
+                $user->users_id = $a_user[0]['users_id'];
+                $user->users_name = $a_user[0]['users_name'];
+                $user->users_email = $a_user[0]['users_email'];
+                $user->is_active = $a_user[0]['is_active'];
+                $user->roles_id = $a_user[0]['roles_id'];
+                $user->role = Role::getRolesById($a_user[0]['roles_id']);
+    
+                return $user;
+    
+            }
+            return null;
+      
     }
 
     public static function checkIfUserExists($name , $id = null){
@@ -55,9 +80,10 @@ class User {
         return $user_name ? $user_name : false;
     }
 
-    public static function create($name , $role_id){
+    public static function create($name , $role_id ,$email){
         $user = new User();
         $user->users_name = $name;
+        $user->users_email = $email;
         $user->is_active = 0;
         $user->roles_id = $role_id;
         self::connectDatabase();
@@ -78,6 +104,7 @@ class User {
             $user = new User();
             $user->users_id = $a_user[0]['users_id'];
             $user->users_name = $a_user[0]['users_name'];
+            $user->users_email = $a_user[0]['users_email'];
             $user->is_active = $a_user[0]['is_active'];
             $user->roles_id = $a_user[0]['roles_id'];
             $user->role = Role::getRolesById($a_user[0]['roles_id']);
@@ -115,8 +142,9 @@ class User {
 
     }
     
-    public  function update($name , $roles_id){
+    public  function update($name , $roles_id , $email){
       $this->users_name = $name;
+      $this->users_email = $email;
       $this->is_active = false;
       $this->roles_id = $roles_id;
       $this->role = Role::getRolesById($this->roles_id);
@@ -145,6 +173,7 @@ class User {
                 $an_ActiveUser = new User();
                 $an_ActiveUser->users_id = $users['users_id'];
                 $an_ActiveUser->users_name = $users['users_name'];
+                $an_ActiveUser->users_email = $users['users_email'];
                 $an_ActiveUser->is_active = $users['is_active'];
                 $allActiveUsers[] = $an_ActiveUser;
             }

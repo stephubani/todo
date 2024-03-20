@@ -5,7 +5,6 @@ require_once 'classes/Role.php';
 
 
 $allUser = User::getAllUser();
-;
 $activeRole = Role::selectAllActiveRoles();
 
 
@@ -14,7 +13,7 @@ $activeRole = Role::selectAllActiveRoles();
 <?php require_once 'partials/head.php'?>
         <?php require_once 'partials/nav.php'; ?>
        <center>
-            <h1>User</h1>
+                <h1><?php echo isset($_SESSION['user_loggedIn']) ? $_SESSION['user_loggedIn']->users_name : 'User'?></h1>
             <p>Please fill this form to register as a user</p>
        </center>
            
@@ -23,13 +22,19 @@ $activeRole = Role::selectAllActiveRoles();
                 <input type="text" name="fullname" id="fullname" class="form-control" value="" placeholder="FullName"> 
             </div>
             <div class="col-auto">
+                <input type="email" name="email" id="email" class="form-control" value="" placeholder="Your Email"> 
+            </div>
+            <div class="col-auto">
                 <select name="" id="active_role" class="form-select">
                     <option  value="" >Select A Role</option>
                     <?php  foreach($activeRole as $role){?>
                         <option value="<?php echo $role->roles_id?>"><?php echo $role->roles_name?></option>
                     <?php } ?>
+
                 </select>
             </div>
+
+           
                 
             <input type="hidden" name="user_id" id="userid" value="">
             <div class="col-auto">
@@ -43,7 +48,7 @@ $activeRole = Role::selectAllActiveRoles();
             </div>
        </div>
 
-       <div class="row">
+       <div class="row bla">
             <div class="col-md">
                 <table class="table table-striped">
                     <thead>

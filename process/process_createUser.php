@@ -5,13 +5,14 @@ require_once '../classes/User.php';
 if($_POST){
     $userid = isset($_POST['user_id']) ? $_POST['user_id'] :  '';
     $name = $_POST['name'];
+    $email = $_POST['email'];
     $role_id = $_POST['role_id'];
-        if(!empty($name)&& !empty($role_id)){
+        if(!empty($name)&& !empty($role_id) && !empty($email)){
             $userExist = User::checkIfUserExists($name , $userid);
             if(!$userExist){
                 if(!empty($userid)){
                     $user = User::getUserById($userid);
-                    $updated = $user->update($name , $role_id);
+                    $updated = $user->update($name , $role_id , $email);
 
                     if($updated){
                         $success_message = 'Updated Successful';
@@ -26,7 +27,7 @@ if($_POST){
                     }
 
                 }else{
-                    $user_id = User::create($name , $role_id);
+                    $user_id = User::create($name , $role_id , $email);
                     $user = User::getUserById($user_id);
                     $success_message = 'Registration Successful';
                     

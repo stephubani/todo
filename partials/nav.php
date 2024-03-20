@@ -1,3 +1,7 @@
+  <?php
+  session_start();
+  ?>
+  
   <!-- nav bar starts here -->
   <div class="row">
             <div class="col-md ">
@@ -20,6 +24,17 @@
                                 <li class="nav-item">
                                     <a class="nav-link active redesigned" aria-current="page" href="roles.php" style="font-size: 15px;">Roles</a>
                                 </li>
+                        
+                                <li class="nav-item pad">
+                                    <a class="nav-link active redesigned" aria-current="page" href="<?php echo isset($_SESSION['user_loggedIn']) ? 'logout.php' : 'login.php'?>" style="font-size: 15px;">
+                                    <?php echo isset($_SESSION['user_loggedIn']) ? 'Logout' : 'Login'?></a>
+                                </li>
+
+                        
+
+                              
+
+
 
 
                             </ul>

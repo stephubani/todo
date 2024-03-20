@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('#user_button').click(function(){
         let fullname =   $('#fullname').val();
+        let email = $('#email').val();
         let role_id = $('#active_role').val();
 
         
@@ -8,6 +9,7 @@ $(document).ready(function(){
         let user_id = $('#userid').val();
         let data = {
             name : fullname,
+            email : email,
             role_id :role_id
         }
         if(user_id != ''){

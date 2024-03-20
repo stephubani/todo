@@ -7,9 +7,17 @@ $roles = Role::getAllRoles();
 
 ?>
 
+
+
 <?php require_once 'partials/head.php'?>
 
-        <?php require_once 'partials/nav.php'; ?>
+        <?php require_once 'partials/nav.php'; 
+        if(!isset($_SESSION['user_loggedIn'])){
+            echo  "You must be logged in to access this page";
+            exit;
+        }
+        
+        ?>
         <h1>Roles</h1>
         <div class="row g-2">
             <div class="col-auto">

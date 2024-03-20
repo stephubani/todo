@@ -1,14 +1,14 @@
 $(document).ready(function(){
 
-     $('.mark_btn').click(function(event){
-       markAsCompleted(event);
+  $('.mark_btn').click(function(event){
+    markAsCompleted(event);
 
-    })
+  })
 
-    $('.edit_btn').click(function(event){
-      editTodoName(event);
-
-   })
+  $('.edit_btn').click(function(event){
+    editTodoName(event);
+    
+  })
 
    
     function markAsCompleted(event){
