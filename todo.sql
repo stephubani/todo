@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2024 at 07:41 AM
+-- Generation Time: Mar 22, 2024 at 01:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,13 +38,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`roles_id`, `roles_name`, `roles_isActive`) VALUES
-(6, 'Janitor', 0),
-(7, 'Secretary', 0),
-(8, 'Architect', 0),
-(9, 'Bartender', 1),
-(10, 'Receptionist', 0),
-(11, 'Software Development', 1),
-(12, 'React Developer', 1);
+(39, 'Admin', 1),
+(44, 'Janitor', 1),
+(45, 'd flex', 0);
 
 -- --------------------------------------------------------
 
@@ -67,15 +63,7 @@ CREATE TABLE `todo` (
 --
 
 INSERT INTO `todo` (`id`, `name`, `is_completed`, `created_at`, `updated_at`, `completed_at`, `users_id`) VALUES
-(403, 'Wash Clothes', 0, '2024-03-02 10:54:42', NULL, NULL, NULL),
-(404, 'Attend Meeting', 0, '2024-03-02 10:58:10', NULL, NULL, 83),
-(405, 'Study Magazines', 0, '2024-03-02 11:00:00', '2024-03-02 11:00:07', NULL, 83),
-(406, 'Study Watchtowerr', 0, '2024-03-02 11:00:16', '2024-03-04 08:05:03', NULL, 86),
-(407, 'Iron Cllothes', 0, '2024-03-02 11:01:28', '2024-03-04 09:23:49', NULL, 83),
-(408, 'Water Plants', 0, '2024-03-04 09:37:20', NULL, NULL, 82),
-(409, 'Catch Fishes', 0, '2024-03-04 09:38:25', NULL, NULL, 82),
-(410, 'Driving School', 0, '2024-03-04 10:02:44', NULL, NULL, 82),
-(411, 'Hug Harry', 0, '2024-03-04 10:03:06', '2024-03-04 10:03:23', NULL, 86);
+(422, 'Fix My Wig that auty brenda spoil', 0, '2024-03-13 05:11:17', NULL, NULL, 100);
 
 -- --------------------------------------------------------
 
@@ -86,6 +74,8 @@ INSERT INTO `todo` (`id`, `name`, `is_completed`, `created_at`, `updated_at`, `c
 CREATE TABLE `users` (
   `users_id` int(11) NOT NULL,
   `users_name` varchar(50) DEFAULT NULL,
+  `users_email` varchar(100) NOT NULL,
+  `users_password` varchar(100) NOT NULL DEFAULT 'password',
   `is_active` tinyint(1) NOT NULL DEFAULT 0,
   `roles_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -94,18 +84,17 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`users_id`, `users_name`, `is_active`, `roles_id`) VALUES
-(82, 'Ubani Emmanuella Ijeomga ', 0, 0),
-(83, 'Ubani Sithri', 0, 0),
-(85, 'steph', 0, 0),
-(86, 'Ubani E', 0, 0),
-(89, 'Jehovah Witneses', 0, 0),
-(90, 'hhi', 1, 0),
-(91, 'Ubani Samuel', 0, 9),
-(92, 'Fowl', 0, 9),
-(93, 'ji', 0, 11),
-(94, 'stepha', 0, 11),
-(95, 'Ubani Emmanuella ', 0, 11);
+INSERT INTO `users` (`users_id`, `users_name`, `users_email`, `users_password`, `is_active`, `roles_id`) VALUES
+(82, 'Ubani Emmanuella Ijeomga ', '', 'password', 0, 0),
+(83, 'Ubani Sithri', '', 'password', 0, 0),
+(85, 'steph', '', 'password', 0, 0),
+(86, 'Ubani E', '', 'password', 0, 0),
+(97, 'Ubani Stephanie', '', 'password', 1, 39),
+(100, 'Ubani ', '', 'password', 1, 39),
+(101, 'stephh      ', '', 'password', 1, 44),
+(102, 'Ubani Steph', 'ubanistephanieugonna@gmail.com', 'password', 0, 39),
+(103, 'Ubani Stephaan', '', 'password', 0, 39),
+(104, 'Ugonna', 'steph@gmail.com', 'password', 0, 44);
 
 --
 -- Indexes for dumped tables
@@ -141,19 +130,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `roles_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `roles_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `todo`
 --
 ALTER TABLE `todo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=412;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=425;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `users_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `users_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- Constraints for dumped tables
