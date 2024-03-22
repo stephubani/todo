@@ -7,7 +7,7 @@ if($_POST){
     $name = $_POST['name'];
     $email = $_POST['email'];
     $role_id = $_POST['role_id'];
-        if(!empty($name)&& !empty($role_id) && !empty($email)){
+        if(!empty($name)&& !empty($role_id)){
             $userExist = User::checkIfUserExists($name , $userid);
             if(!$userExist){
                 if(!empty($userid)){
@@ -27,12 +27,20 @@ if($_POST){
                     }
 
                 }else{
-                    $user_id = User::create($name , $role_id , $email);
-                    $user = User::getUserById($user_id);
-                    $success_message = 'Registration Successful';
-                    
-                    $response = ['success'=> true , 'message'=> $success_message , 'data' => $user];
-                    echo json_encode($response);
+                    if(!empty($email)){
+                        $user_id = User::create($name , $role_id , $email);
+                        $user = User::getUserById($user_id);
+                        $success_message = 'Registration Successful';
+                        
+                        $response = ['success'=> true , 'message'=> $success_message , 'data' => $user];
+                        echo json_encode($response);
+                    }else{
+                        $error_message = 'Email is Required';
+                            
+                        $response = ['success'=> false , 'message'=> $error_message ];
+                        echo json_encode($response);
+                    }
+                   
                 }
                 
               

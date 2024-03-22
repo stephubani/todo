@@ -15,8 +15,7 @@ $roles = Role::getAllRoles();
         if(!isset($_SESSION['user_loggedIn'])){
             echo  "You must be logged in to access this page";
             exit;
-        }
-        
+        }        
         ?>
         <h1>Roles</h1>
         <div class="row g-2">
