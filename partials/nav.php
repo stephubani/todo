@@ -1,6 +1,4 @@
-  <?php
-  session_start();
-  ?>
+ 
   
   <!-- nav bar starts here -->
   <div class="row">
