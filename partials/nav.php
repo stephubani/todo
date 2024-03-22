@@ -1,5 +1,4 @@
- 
-  
+
   <!-- nav bar starts here -->
   <div class="row">
             <div class="col-md ">

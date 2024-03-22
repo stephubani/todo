@@ -1,3 +1,4 @@
+<?php session_start();?>
 <?php require_once 'partials/head.php'?>
 <?php require_once 'partials/nav.php'?>
 <div class="container-fluid">

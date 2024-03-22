@@ -2,12 +2,11 @@
 error_reporting(E_ALL);
 require_once "classes/User.php";
 require_once 'classes/Role.php';
+session_start();
 
 
 $allUser = User::getAllUser();
 $activeRole = Role::selectAllActiveRoles();
-
-
 
 ?>
 <?php require_once 'partials/head.php'?>
