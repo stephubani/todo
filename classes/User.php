@@ -19,9 +19,9 @@ class User {
 
     public  function linkPropertiesToDatabase(){
        if(!isset($this->users_id)){
-            $sql = 'INSERT INTO users(users_name , is_active , roles_id , users_email) VALUES(?,?,?,?)';
+            $sql = 'INSERT INTO users(users_name , is_active , roles_id , users_email , users_password) VALUES(?,?,?,? ,? )';
             $statement = self::$dbconn->prepare($sql);
-            $response = $statement->execute([$this->users_name , (int)$this->is_active , $this->roles_id , $this->users_email]);
+            $response = $statement->execute([$this->users_name , (int)$this->is_active , $this->roles_id , $this->users_email , $this->users_password]);
             if($response){
                 $this->users_id = self::$dbconn->lastInsertId();
                 return $this->users_id;
@@ -80,10 +80,11 @@ class User {
         return $user_name ? $user_name : false;
     }
 
-    public static function create($name , $role_id ,$email){
+    public static function create($name , $role_id ,$email , $password){
         $user = new User();
         $user->users_name = $name;
         $user->users_email = $email;
+        $user->users_password = $password;
         $user->is_active = 0;
         $user->roles_id = $role_id;
         self::connectDatabase();

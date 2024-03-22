@@ -6,6 +6,7 @@ if($_POST){
     $userid = isset($_POST['user_id']) ? $_POST['user_id'] :  '';
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
     $role_id = $_POST['role_id'];
         if(!empty($name)&& !empty($role_id)){
             $userExist = User::checkIfUserExists($name , $userid);
@@ -27,8 +28,8 @@ if($_POST){
                     }
 
                 }else{
-                    if(!empty($email)){
-                        $user_id = User::create($name , $role_id , $email);
+                    if(!empty($email)|| !empty($password)){
+                        $user_id = User::create($name , $role_id , $email , $password);
                         $user = User::getUserById($user_id);
                         $success_message = 'Registration Successful';
                         
