@@ -29,6 +29,7 @@ $(document).ready(function(){
                 html += `
                     <td class = 'roles'>${rsp.data.role.roles_name}</td>
                     <td class='username'>${rsp.data.users_name}</td>
+                    <td class='email'>${rsp.data.users_email}</td>
                     <td>
                         <button class = 'btn btn-secondary status'id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}
@@ -42,7 +43,7 @@ $(document).ready(function(){
                             <i class="fa-solid fa-pen"></i>
                         </button>
 
-                        <button class='btn btn-primary  delete_btn' id='deleteUser_${rsp.data.users_id}'>
+                        <button class='btn btn-danger  delete_btn' id='deleteUser_${rsp.data.users_id}'>
                             <i class="fa-solid fa-trash"></i>
                         </button>
 
@@ -65,8 +66,8 @@ $(document).ready(function(){
 
                 $('#fullname').val('')
                 $('#user_button').text('Register')
-                
                 $('#active_role').val('');
+                $('#email').val('');
                 
 
                 document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)
@@ -89,12 +90,14 @@ $(document).ready(function(){
     function editUser(event){
 
         let userName = $(event.target).closest('tr').find('.username').text()
+        let email = $(event.target).closest('tr').find('.useremail').text()
         let roles_id = $(event.target).closest('tr').find('.roles_id').val()
         let user_id = $(event.target).closest('tr').find('.user_id').val()
         $('#userid').val(user_id)
         $('#user_button').text('Edit')
         $('#fullname').val(userName)
         $('#active_role').val(roles_id);
+        $('#email').val(email);
 
        
         
@@ -119,6 +122,7 @@ $(document).ready(function(){
                 html = `
                     <td class = 'roles'>${rsp.data.role != null ? rsp.data.role.roles_name : ''}</td>
                     <td class='username'>${rsp.data.users_name}</td>
+                    <td class='email'>${rsp.data.users_email}</td>
                     <td>
                         <button class = 'btn btn-secondary status' id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}

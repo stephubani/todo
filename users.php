@@ -1,11 +1,13 @@
 <?php
-session_start();
+
 error_reporting(E_ALL);
 require_once "classes/User.php";
 require_once 'classes/Role.php';
-
+session_start();
 
 $allUser = User::getAllUser();
+// echo '<pre>';
+// print_r($allUser);
 $activeRole = Role::selectAllActiveRoles();
 
 ?>
@@ -53,6 +55,7 @@ $activeRole = Role::selectAllActiveRoles();
                     <thead>
                         <th>Roles</th>
                         <th>Name</th>
+                        <th>Users Email</th>
                         <th>Activate</th>
                         <th>Edit</th>
 
@@ -63,6 +66,7 @@ $activeRole = Role::selectAllActiveRoles();
                         <tr id="<?php echo $user->users_id?>">
                             <td class="roles" ><?php echo $user->role?->roles_name?></td>
                             <td class="username"><?php echo $user->users_name?> </td>
+                            <td class="useremail"><?php echo $user->users_email?></td>
                             <td class="is_active"> 
                             
                                 <button class="btn <?php  echo $user->is_active == 0 ? ' btn-secondary ' : "btn-primary "?>status" id="status_<?php echo $user->users_id?>">

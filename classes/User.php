@@ -42,26 +42,26 @@ class User {
         self::$dbconn = (new Db())->conn;
     }
 
-    public  static function Login($users_email){
+    public  static function login($users_email){
         self::connectDatabase();
         $sql = 'SELECT * FROM users WHERE users_email=?';
         $statement = self::$dbconn->prepare($sql);
         $statement->execute([$users_email ]);    
-        $a_user = $statement->fetchAll(PDO::FETCH_ASSOC);
-       
-            if($a_user){
-                $user = new User();
-                $user->users_id = $a_user[0]['users_id'];
-                $user->users_name = $a_user[0]['users_name'];
-                $user->users_email = $a_user[0]['users_email'];
-                $user->is_active = $a_user[0]['is_active'];
-                $user->roles_id = $a_user[0]['roles_id'];
-                $user->role = Role::getRolesById($a_user[0]['roles_id']);
-    
-                return $user;
-    
-            }
-            return null;
+        $a_user = $statement->fetch(PDO::FETCH_ASSOC);
+        
+        if($a_user){
+            $user = new User();
+            $user->users_id = $a_user['users_id'];
+            $user->users_name = $a_user['users_name'];
+            $user->users_email = $a_user['users_email'];
+            $user->is_active = $a_user['is_active'];
+            $user->roles_id = $a_user['roles_id'];
+            $user->role = Role::getRolesById($a_user['roles_id']);
+
+            return $user;
+
+        }
+        return null;
       
     }
 
@@ -130,6 +130,7 @@ class User {
                 $a_user = new User();
                 $a_user->users_id = $user['users_id'];
                 $a_user->users_name = $user['users_name'];
+                $a_user->users_email = $user['users_email'];
                 $a_user->is_active = $user['is_active'];
                 $a_user->roles_id = $user['roles_id'];
                 $a_user->role = Role::getRolesById($user['roles_id']);

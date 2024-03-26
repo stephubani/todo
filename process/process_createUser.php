@@ -11,7 +11,7 @@ if($_POST){
         if(!empty($name)&& !empty($role_id)){
             $userExist = User::checkIfUserExists($name , $userid);
             if(!$userExist){
-                if(!empty($userid)){
+                if(!empty($userid)|| !empty($email)){
                     $user = User::getUserById($userid);
                     $updated = $user->update($name , $role_id , $email);
 
