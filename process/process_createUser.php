@@ -6,7 +6,7 @@ if($_POST){
     $userid = isset($_POST['user_id']) ? $_POST['user_id'] :  '';
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = isset($_POST['password']) ? $_POST['password'] :  '';
     $role_id = $_POST['role_id'];
         if(!empty($name)&& !empty($role_id)){
             $userExist = User::checkIfUserExists($name , $userid);

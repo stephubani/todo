@@ -1,8 +1,8 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 require_once "classes/User.php";
 require_once 'classes/Role.php';
-session_start();
 
 
 $allUser = User::getAllUser();
