@@ -29,7 +29,7 @@ $(document).ready(function(){
                 html += `
                     <td class = 'roles'>${rsp.data.role.roles_name}</td>
                     <td class='username'>${rsp.data.users_name}</td>
-                    <td class='email'>${rsp.data.users_email}</td>
+                    <td class='useremail'>${rsp.data.users_email}</td>
                     <td>
                         <button class = 'btn btn-secondary status'id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}
@@ -122,7 +122,7 @@ $(document).ready(function(){
                 html = `
                     <td class = 'roles'>${rsp.data.role != null ? rsp.data.role.roles_name : ''}</td>
                     <td class='username'>${rsp.data.users_name}</td>
-                    <td class='email'>${rsp.data.users_email}</td>
+                    <td class='useremail'>${rsp.data.users_email}</td>
                     <td>
                         <button class = 'btn btn-secondary status' id='status_${rsp.data.users_id}'>
                             ${rsp.data.is_active == false ? 'Unactive' : 'Active'}
