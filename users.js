@@ -4,10 +4,8 @@ $(document).ready(function(){
         let email = $('#email').val();
         let password = $('#password').val();
         let role_id = $('#active_role').val();
-
-        
-        
         let user_id = $('#userid').val();
+
         let data = {
             name : fullname,
             email : email,
@@ -19,7 +17,6 @@ $(document).ready(function(){
         }
         let url = 'process/process_createUser.php'
         $.post(url ,data , function(response){
-            console.log(response)
             let rsp = JSON.parse(response)
             if(rsp.success == true){
                 let html = ''
@@ -68,6 +65,8 @@ $(document).ready(function(){
                 $('#user_button').text('Register')
                 $('#active_role').val('');
                 $('#email').val('');
+                $('#userid').val('')
+                
                 
 
                 document.getElementById(`editUser_${rsp.data.users_id}`).addEventListener('click', editUser)

@@ -65,21 +65,26 @@ class User {
       
     }
 
-    public static function checkIfUserExists($name , $id = null){
+    public static function checkIfUserExists($name , $email , $id = null){
         self::connectDatabase();
-        $sql = 'SELECT * FROM users WHERE users_name =?';
-        $params = [$name];
+        $sql = 'SELECT * FROM users WHERE (users_name =? OR users_email=?)';
+        $params = [$name , $email];
         if($id){
             $sql .= ' AND users_id != ?';
             $params[] = $id;
         }
         $statement= self::$dbconn->prepare($sql);
         $statement->execute($params);
-        $user_name = $statement->fetch(PDO::FETCH_ASSOC);
+        $user_details = $statement->fetch(PDO::FETCH_ASSOC);
         
-        return $user_name ? $user_name : false;
+        return $user_details ? $user_details : false;
     }
 
+
+
+
+
+    
     public static function create($name , $role_id ,$email , $password){
         $user = new User();
         $user->users_name = $name;
