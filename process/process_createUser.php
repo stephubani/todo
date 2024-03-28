@@ -8,10 +8,10 @@ if($_POST){
     $email = $_POST['email'];
     $password = isset($_POST['password']) ? $_POST['passoword'] :  '';
     $role_id = $_POST['role_id'];
-    
-        if(!empty($name)&& !empty($role_id)){
+
+        if(!empty($name) && !empty($role_id)){
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                $error_message = 'Not A Valid Email';
+                $error_message = 'Please ensure the email field is not empty or enter a valid email address';
                             
                 $response = ['success'=> false , 'message'=> $error_message];
                 echo json_encode($response);
@@ -53,7 +53,7 @@ if($_POST){
                     
                   
                 }else{
-                    $error_message = 'Username Must Be Unique';
+                    $error_message = 'Username And Email Must Be Unique';
                         
                     $response = ['success'=> false , 'message'=> $error_message ];
                     echo json_encode($response);
