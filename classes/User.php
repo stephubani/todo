@@ -42,11 +42,11 @@ class User {
         self::$dbconn = (new Db())->conn;
     }
 
-    public  static function login($users_email){
+    public  static function login($users_email , $users_password){
         self::connectDatabase();
-        $sql = 'SELECT * FROM users WHERE users_email=?';
+        $sql = 'SELECT * FROM users WHERE users_email=? AND users_password=?';
         $statement = self::$dbconn->prepare($sql);
-        $statement->execute([$users_email ]);    
+        $statement->execute([$users_email , $users_password ]);    
         $a_user = $statement->fetch(PDO::FETCH_ASSOC);
         
         if($a_user){

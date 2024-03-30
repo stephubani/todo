@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-auto" >
-            <input type="password"class='form-control' name="password" id="password" value="password" disabled placeholder="Password">
+            <input type="password"class='form-control' name="password" id="password" value="" placeholder="Password">
           
         </div>
         <div class="col-auto">
