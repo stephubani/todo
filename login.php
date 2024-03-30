@@ -1,6 +1,12 @@
 <?php session_start();?>
 <?php require_once 'partials/head.php'?>
 <?php require_once 'partials/nav.php'?>
+<?php require_once 'partials/nav.php'; 
+        if(isset($_SESSION['user_loggedIn'])){
+            header('location:index.php');
+            exit;
+        }        
+        ?>
 <div class="container-fluid">
     <div class="row">
         <div>
