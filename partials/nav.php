@@ -19,8 +19,8 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link active redesigned" aria-current="page" href="<?php echo !isset($_SESSION['user_loggedIn']) ? 'roles.php' : ''?>" style="font-size: 15px;">
-                                    <?php echo !isset($_SESSION['user_loggedIn']) ? 'Roles' : ''?></a>
+                                    <a class="nav-link active redesigned" aria-current="page" href="<?php echo isset($_SESSION['user_loggedIn']) ? 'roles.php' : ''?>" style="font-size: 15px;">
+                                    <?php echo isset($_SESSION['user_loggedIn']) ? 'Roles' : ''?></a>
                                 </li>
                         
                                 <li class="nav-item pad">
