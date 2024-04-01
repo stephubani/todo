@@ -4,6 +4,3 @@ define("DBHOST","localhost");
 define("DBNAME","todo");
 define("DBUSER","root");
 define("DBPASS","");
-
-
-?>
